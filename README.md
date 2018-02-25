@@ -67,6 +67,9 @@ Commented from pasha/tools/mwe/main.cpp
 # Installation
 
 ```bash
+## THIS README IS INCOMPLETE, FOLLOW THE README IN apps/dafaxc.r.b.s to build that
+## TO BUILD GEMS - FOLLOW THE README IN apps/macsim.r.d.b.s/macsim-mem-axc-64
+
 mkdir build_repo
 cd build_repo
 mkdir build-mem-axc-64
