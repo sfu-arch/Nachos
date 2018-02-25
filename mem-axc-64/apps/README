@@ -1,0 +1,47 @@
+
+#Things to build from scratch
+when updating setup
+
+
+Analogous setups
+1. pasha and runframework - needs llvm  ; generates dot graphs
+
+2. ruby, bloom, dafaxc, pin tool - needs boost, 
+
+  pin tool => gcc-5, gcc-4.8
+  bloom   => ruby 
+  dafaxc => boost 1.60.1
+
+
+order of testing
+- ruby
+- bloom
+- pin tool
+- dafaxc
+
+- Build Ruby with new version of gcc
+RUBY : hardcoded CC= g++ ; need to manually change 
+at /home/nvedula/summer2016/mem-axc-64/apps/macsim.r.d.b.s/macsim-mem-axc-64/gems-lib-ooo/common/Makefile.common
+
+  - cd /macsim.r.d.b.s/macsim-mem-axc-64/gems-lib-ooo/ruby_clean
+  - CXX=g++-6 CC=gcc-6 make  PROTOCOL=MESI_CMP_directory_m  NOTESTER=1 DEBUG=0   -j 32
+
+- Building bloom.s 
+  CXX=g++-6 CC=gcc-6 cmake /home/nvedula/summer2016/mem-axc-64/apps/bloom.s
+
+- Building dafaxc.r.b.s 
+ CXX=g++-6 cmake  -DCMAKE_BUILD_TYPE=Debug -DBOOST_ROOT=/p-ssd/modules/boost-1.61.0.gcc5  /home/nvedula/summer2016/mem-axc-64/apps/dafaxc.r.b.s 
+
+
+
+
+
+pin
+  - CXX=g++-5 make
+  dlopen failed: library "libz.so.1" not found
+
+
+
+CXX=g++-6 CC=gcc-6 make  PROTOCOL=MESI_CMP_directory_m  NOTESTER=1 DEBUG=0 -j 32 
+CXX=g++-6 CC=gcc-6 cmake /home/nvedula/summer2016/mem-axc-64/apps/bloom.s
+CC=gcc-6  CXX=g++-6 cmake  -DCMAKE_BUILD_TYPE=Debug -DBOOST_ROOT=/p-ssd/modules/boost-1.61.0  /home/nvedula/summer2016/mem-axc-64/apps/dafaxc.r.b.s

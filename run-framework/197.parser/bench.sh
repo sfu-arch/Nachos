@@ -1,0 +1,9 @@
+SUITE=spec2000
+NAME=197.parser
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('table_pointer') 
+LDFLAGS=
+RUNCMD="${DATA}/${NAME}/2.1.dict -batch < ${DATA}/${NAME}/ref.in"
+TESTCMD="${DATA}/${NAME}/2.1.dict -batch < ${DATA}/${NAME}/amirali.in"
+PRERUN="ln -s ${DATA}/${NAME}/words"

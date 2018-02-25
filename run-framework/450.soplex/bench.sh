@@ -1,0 +1,9 @@
+SUITE=spec2006
+NAME=450.soplex
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('_ZN6soplex9CLUFactor16vSolveUrightNoNZEPdS1_Piid')
+LDFLAGS=
+RUNCMD="-s1 -e -m45000 ${DATA}/${NAME}/ref.mps"
+TESTCMD="-s1 -e -m3000 ${DATA}/${NAME}/test.mps"
+PRERUN=

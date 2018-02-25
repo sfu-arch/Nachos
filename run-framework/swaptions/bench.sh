@@ -1,0 +1,10 @@
+SUITE=parsec
+NAME=swaptions
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('_Z21HJM_Swaption_BlockingPddddddiidS_PS_llii' )
+LDFLAGS=
+LIBS=
+RUNCMD="-ns 128 -sm 1000 -nt 1"
+PRERUN=
+TESTCMD="-ns 16 -sm 10000 -nt 1"

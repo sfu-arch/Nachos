@@ -1,0 +1,11 @@
+Main: Loading Start Iteration nos. 
+Main: Loaded Iteration nos. 
+Warning: optimizations not enabled.
+Error: User specified set of debug components, but the RUBY_DEBUG compile-time flag is false.
+Solution: Re-compile with RUBY_DEBUG set to true.
+ldst: ../axc-dump.out.0.gz
+bankid : 0Sending to Memory nodeid: 5 g_clk: 2
+bankid : 0Sending to Memory nodeid: 9 g_clk: 3
+graph: get resp from memory nodeid: 5 g_clk: 247
+graph: get resp from memory nodeid: 9 g_clk: 447
+Success: MESI_CMP_directory_m

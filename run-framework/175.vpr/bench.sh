@@ -1,0 +1,9 @@
+SUITE=spec2000
+NAME=175.vpr
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('try_route') 
+LDFLAGS=
+RUNCMD="${DATA}/${NAME}/net.in ${DATA}/${NAME}/arch.in ${DATA}/${NAME}/place.in route.out -nodisp -route_only -route_chan_width 15 -pres_fac_mult 2 -acc_fac 1 -first_iter_pres_fac 4 -initial_pres_fac 8"
+TESTCMD="${DATA}/${NAME}/test/net-test.in ${DATA}/${NAME}/test/arch-test.in ${DATA}/${NAME}/test/place-test.in route.out -nodisp -route_only -route_chan_width 15 -pres_fac_mult 2 -acc_fac 1 -first_iter_pres_fac 4 -initial_pres_fac 8"
+PRERUN=

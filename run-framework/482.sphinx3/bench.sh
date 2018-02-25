@@ -1,0 +1,10 @@
+SUITE=spec2006
+NAME=482.sphinx3
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('vector_gautbl_eval_logs3')
+LDFLAGS=
+RUNCMD="${DATA}/${NAME}/ref/ctlfile ${DATA}/${NAME}/ref ${DATA}/${NAME}/ref/args.an4"
+#RUNCMD="${DATA}/${NAME}/train/ctlfile ${DATA}/${NAME}/train ${DATA}/${NAME}/train/args.an4"
+PRERUN="ln -s ${DATA}/${NAME}/train/beams.dat; ln -s ${DATA}/${NAME}/model"
+TESTCMD="${DATA}/${NAME}/test/ctlfile ${DATA}/${NAME}/test ${DATA}/${NAME}/test/args.an4"

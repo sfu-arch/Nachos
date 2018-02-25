@@ -1,0 +1,9 @@
+SUITE=perfect
+NAME=fft-2d
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('fft')
+LDFLAGS=
+RUNCMD=""
+PRERUN=""
+LIBS="-lrt"

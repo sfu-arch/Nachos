@@ -1,0 +1,44 @@
+// Always ACC = NUM processors as there is some logic inside memfetch etc that might break
+
+g_NUM_PROCESSORS: 8
+g_PROCS_PER_CHIP: 8
+
+g_NUM_ACCS: 8
+g_ACCS_PER_CHIP: 8
+// Baseline number where accelerator index starts. 0--g_PROC_NUM_ACC-1 is processors. 
+g_PROC_NUM_ACC: 2
+
+L1_CACHE_ASSOC: 8
+L1_CACHE_NUM_SETS_BITS: 8
+L2_CACHE_ASSOC: 8
+L2_CACHE_NUM_SETS_BITS: 8
+
+
+L1T_CACHE_ASSOC: 8
+L1T_CACHE_NUM_SETS_BITS: 8
+L2T_CACHE_ASSOC: 8
+L2T_CACHE_NUM_SETS_BITS: 8
+
+
+L1_to_L2_MSG_LATENCY: 2
+L2_to_L1_MSG_LATENCY: 2
+L2T_to_L1T_DATA_LATENCY: 4
+L1_to_L2_DATA_LATENCY: 2
+L2_to_L1_DATA_LATENCY: 8
+MEM_to_L2_MSG_LATENCY: 200
+MEM_to_L2_DATA_LATENCY: 200
+
+NUMBER_OF_VIRTUAL_NETWORKS: 8
+g_NETWORK_TOPOLOGY: ACC_NETWORK
+g_CACHE_DESIGN: FUSION  // specifies file prefix for FILE_SPECIFIED topology
+
+g_DATA_BLOCK_BYTES:32
+// Needs to be same as block size. Could be slightly bigger to accomodate fields
+g_DATA_MESSAGE_SIZE:32
+
+g_YAO_DRIVER:2
+
+g_DMA_PROC:1
+g_FLIT_SIZE:8
+g_GMEM_SKIP_L1D: false
+WRITES_STALL_AT_MSHR: true

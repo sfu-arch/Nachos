@@ -1,0 +1,9 @@
+SUITE=spec2006
+NAME=453.povray
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('_ZN3povL24All_Sphere_IntersectionsEPNS_13Object_StructEPNS_10Ray_StructEPNS_13istack_structE')
+LDFLAGS=
+RUNCMD="${DATA}/${NAME}/SPEC-benchmark-ref.ini"
+PRERUN="ln -s ${DATA}/${NAME}/input; ln -s ${DATA}/${NAME}/SPEC-benchmark-ref.pov"
+TESTCMD="${DATA}/${NAME}/SPEC-benchmark-test.ini -L input/"

@@ -1,0 +1,99 @@
+#include <iostream>
+using namespace std;
+#include "GenericBloomFilter_1.h" 
+#include "Address.h"
+#include <stdio.h>
+#include <string>
+
+int main( int argc, char* argv[])
+{
+  
+  // for smt threads "NonCounting, Bulk  
+  // GenericBloomFilter bf_MG("Multigrain-16384_16384");//first bloom size _ second bloom size 
+  // GenericBloomFilter bf_MBS("MultiBitSel-16384_4_1_Regular"); 
+  //filtersize_numhashes_skipbits_(Regular/Parallel)
+  // head contains filter size, tail contains bit offset from block number
+
+  // GenericBloomFilter bf_H3("H3-16384_4_Regular"); 
+
+  //----------------------------------------------------------
+  
+
+  
+  //READ FROM axc-dump.out
+  //1300561,Load,6,6685590, 
+
+  GenericBloomFilter_1 bf_ld("LSB_Counting-512:128"); 
+  GenericBloomFilter_1 bf_st("LSB_Counting-512:128"); 
+
+  // int i=1;
+  // decode arguments
+  if(argc < 2) {
+    printf("You must provide at least one argument\n");
+    exit(0);
+  }
+  // report settings
+  // for (;i<argc;i++) 
+    // printf("Argument %d:%s\n",i,argv[i]);
+    std::string axc_filestring = argv[1];
+    cout<<axc_filestring<<endl;
+
+    string line;
+
+    ifstream axcfile;
+    axcfile.open(axc_filestring.c_str(),ios::in);
+    if(axcfile.is_open())
+    {
+      while( getline (axcfile, line))
+      {
+        auto iteration, MemOp, nodeid, addr;
+        getline(line, iteration, ',');
+        getline(line, MemOp, ',');
+        getline(line, nodeid, ',');
+        getline(line, addr, ',');
+        cout<<line <<endl;
+      
+        Address addr;
+        addr.setAddress(stoi(addr));
+        if(MemOp.compare("Load") == 0)
+        {
+          bf_st.increment(addr)
+
+        }
+
+        if(MemOp.compare("Store") == 0)
+        {
+        }
+
+
+        bf_lsb.increment(addr);
+        bf_lsb.increment(addr);
+        cout<<"getcount:"<<bf_lsb.getCount(addr)<<endl;
+
+      
+      
+      
+      }
+    }
+    else 
+      cout<<"Unable to open file \n";
+
+
+
+
+
+
+
+
+
+
+  // addr.setAddress(123233231231);
+  // bf_lsb.increment(addr);
+  // bf_lsb.increment(addr);
+  // cout<<"getcount:"<<bf_lsb.getCount(addr)<<endl;
+  // bf_lsb.decrement(addr);
+  // cout<<"getcount:"<<bf_lsb.getCount(addr)<<endl;
+  // bf_lsb.clear();
+  // cout<<"Totalcount:"<<bf_lsb.getTotalCount()<<endl;
+  return 0;
+}

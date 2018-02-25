@@ -1,0 +1,6 @@
+1
+/home/nvedula/summer2016/mem-axc-64/traces/trace-ldst-gen/blackscholes/trace.txt
+/home/nvedula/summer2016/mem-axc-64/traces/trace-axc-chunkgen/blackscholes/test-black-trace-64/trace.txt
+/home/vnaveen0/vm-shared/work/mem-axc/pin-getmemaxc-memaddr/gzip-test-noprint/trace.txt
+/home/nvedula/summer2016/mem-axc/pin-getmemaxc-memaddr/gzip-test-noprint/trace.txt
+/home/nvedula/hydra/macsim-ooo/tools/gpp/Traces/2th_1ip/trace.txt

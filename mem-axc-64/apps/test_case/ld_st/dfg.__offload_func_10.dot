@@ -1,0 +1,7 @@
+digraph G {
+5 [label="Load(5)", opcode="Load", color=black,ir="  %4 = load i32, i32* %3, align 4, !UID !4"];
+9 [label="Store(9)", opcode="Store", color=black,ir="  store i32 %4, i32* %7, align 4, !UID !8"];
+/* 5->9;  */
+5->9[color=red];
+/* 5->9[color=orange];  */
+}

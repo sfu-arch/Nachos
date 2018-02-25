@@ -1,0 +1,9 @@
+SUITE=spec2006
+NAME=429.mcf
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('price_out_impl')
+LDFLAGS=
+RUNCMD="${DATA}/${NAME}/inp.in"
+TESTCMD="${DATA}/${NAME}/cccp.i -o cccp.s"
+PRERUN=

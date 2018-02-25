@@ -1,0 +1,10 @@
+SUITE=parsec
+NAME=streamcluster
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('_Z5pgainlP6PointsdPliP17pthread_barrier_t' )
+LDFLAGS=
+LIBS=""
+RUNCMD="10 20 128 16384 16384 1000 none output.txt 1"
+PRERUN=
+TESTCMD="10 20 64 8192 8192 1000 none output.txt 1"

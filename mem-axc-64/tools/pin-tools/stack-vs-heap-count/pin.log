@@ -1,0 +1,2 @@
+Pin 3.0 kit 76887
+E:  MemTrace.cpp:113: IARG_MEMORYOP_EA/IARG_MEMORYOP_MASKED_ON invalid memory operand index (13) on    133 0x00000000004065f1 mov qword ptr [rbp-0x60], rax

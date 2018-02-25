@@ -1,0 +1,8 @@
+SUITE=spec2000
+NAME=186.crafty
+BC=${BITCODE_REPO}/${LLVM_VERSION}/${SUITE}/${NAME}.bc
+CFLAGS=
+FUNCTIONS=('EvaluatePawns') 
+LDFLAGS=
+RUNCMD="<${DATA}/${NAME}/crafty-ref.in"
+PRERUN=
