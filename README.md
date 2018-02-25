@@ -1,3 +1,8 @@
+# Notice
+NEEDLE and runframework are borrowed from https://www.github.com/sfu-arch
+and modified for this projcet
+
+
 # Dependencies
 gcc 4.8+ 
 cmake minimum VERSION 2.8
@@ -52,15 +57,23 @@ at $HOME/apps/macsim.r.d.b.s/macsim-mem-axc-64/gems-lib-ooo/common/Makefile.comm
 
 
 
-# To get the stack addreses for pin tool
+To get the stack addreses for pin tool
 Commented from pasha/tools/mwe/main.cpp
 // pm.add(new mwe::MicroWorkloadExtract(SeqFilePath, ExtractedModules));
 
 
 
 
-#Installation
+# Installation
 
+```bash
+mkdir build_repo
+cd build_repo
+mkdir build-mem-axc-64
+cd build-mem-axc-64
+
+
+```bash
 
 
 
