@@ -71,7 +71,14 @@ mkdir build_repo
 cd build_repo
 mkdir build-mem-axc-64
 cd build-mem-axc-64
-
+mkdir bloom && cd bloom
+cmake <path/to/bloom.s>
+make -j 8
+cd ../
+mkdir dafaxc
+# in the cmake file of dafaxc set the path to the generated libbloom.a in the previous folder
+cmake -DBOOST_ROOT= <path/to/boost>  <path/to/dafaxc>
+make -j 8
 
 ```bash
 
