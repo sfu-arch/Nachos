@@ -64,7 +64,7 @@ cmake -DBOOST_ROOT=$BOOST -DBLOOM_PATH=$NACHOSROOT/build_repo/bloom  $NACHOSROOT
 make -j 8
 pushd bin
 cp $NACHOSROOT/mem-axc-64/apps/dafaxc.r.b.s/run-dafaxc.sh .
-./run-dafaxc.sh
+#./run-dafaxc.sh
 popd
 popd
 

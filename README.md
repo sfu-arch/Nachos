@@ -59,11 +59,20 @@ Commented from pasha/tools/mwe/main.cpp
 
 # Installation
 
-* Building GEMS Ruby memory model.
+* Building GEMS, DAFXC, BLOOM, and MACSIM 
 
 ```bash
 ./install.sh <path/to/boost/root>
 ```
+* To run dafaxc
+```bash
+cd $NACHOSROOT/build_repo/dafaxc/bin
+#set NACHOSROOT in run-dafaxc.sh
+./run-dafaxc.sh
+# The script calls DAFAXCBIN=$NACHOSROOT/build_repo/dafaxc/bin/dafaxc
+# use $DAFAXCBIN --help for help options
+```
+
 
 # Installing NEEDLE
  Please follow the readme file from here:
