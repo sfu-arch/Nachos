@@ -4,21 +4,24 @@ cmake minimum VERSION 2.8+
 boost library - 1.61 and above
 pin3.0 
 
-Macsim - uses 64 bit shared library generated from pin and needs zlib
+Macsim - uses 64 bit shared library generated from pin and needs zlib,perl
 gems ruby memory model needs flex and bison and zlib
 
 ``` bash
-#If makefile breaks:
 sudo apt-get update 
 sudo apt-get upgrade 
 sudo apt-get install flex bison
 sudo apt-get install zlib1g-dev
 sudo apt-get install cmake
+
+sudo apt-get install perl
+
 # boost needs to be installed from source: 
 # http://www.boost.org/doc/libs/1_65_0/more/getting_started/unix-variants.html
 
 # To install Pin
 # https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads
+
 
 ```
 
