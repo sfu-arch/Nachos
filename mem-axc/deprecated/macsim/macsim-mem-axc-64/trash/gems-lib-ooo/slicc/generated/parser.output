@@ -1,0 +1,4300 @@
+Terminals unused in grammar
+
+   IMBED
+   IMBED_TYPE
+   COLON
+   DEBUG_EXPR_TOKEN
+   DEBUG_MSG_TOKEN
+   TYPE_DECL
+   TYPE_FIELD
+   OTHER
+   NOT
+
+
+State 221 conflicts: 2 shift/reduce
+State 222 conflicts: 2 shift/reduce
+State 223 conflicts: 2 shift/reduce
+State 224 conflicts: 2 shift/reduce
+State 225 conflicts: 2 shift/reduce
+State 226 conflicts: 2 shift/reduce
+State 227 conflicts: 2 shift/reduce
+State 228 conflicts: 2 shift/reduce
+State 229 conflicts: 2 shift/reduce
+State 230 conflicts: 2 shift/reduce
+State 231 conflicts: 2 shift/reduce
+State 232 conflicts: 2 shift/reduce
+State 233 conflicts: 16 shift/reduce
+State 234 conflicts: 16 shift/reduce
+
+
+Grammar
+
+    0 $accept: file $end
+
+    1 file: decl_list
+
+    2 decl_list: decls
+
+    3 decls: decl decls
+    4      | %empty
+
+    5 decl: MACHINE_DECL '(' ident pair_list ')' '{' decl_list '}'
+    6     | ACTION_DECL '(' ident pair_list ')' statement_list
+    7     | IN_PORT_DECL '(' ident ',' type ',' var pair_list ')' statement_list
+    8     | OUT_PORT_DECL '(' ident ',' type ',' var pair_list ')' SEMICOLON
+    9     | TRANSITION_DECL '(' ident_list ',' ident_list ',' ident pair_list ')' ident_list
+   10     | TRANSITION_DECL '(' ident_list ',' ident_list pair_list ')' ident_list
+   11     | EXTERN_TYPE_DECL '(' type pair_list ')' SEMICOLON
+   12     | EXTERN_TYPE_DECL '(' type pair_list ')' '{' type_methods '}'
+   13     | GLOBAL_DECL '(' type pair_list ')' '{' type_members '}'
+   14     | STRUCT_DECL '(' type pair_list ')' '{' type_members '}'
+   15     | ENUM_DECL '(' type pair_list ')' '{' type_enums '}'
+   16     | type ident pair_list SEMICOLON
+   17     | type ident '(' formal_param_list ')' pair_list SEMICOLON
+   18     | void ident '(' formal_param_list ')' pair_list SEMICOLON
+   19     | type ident '(' formal_param_list ')' pair_list statement_list
+   20     | void ident '(' formal_param_list ')' pair_list statement_list
+
+   21 type_members: type_member type_members
+   22             | %empty
+
+   23 type_member: type ident pair_list SEMICOLON
+   24            | type ident ASSIGN expr SEMICOLON
+
+   25 type_methods: type_method type_methods
+   26             | %empty
+
+   27 type_method: type_or_void ident '(' type_list ')' pair_list SEMICOLON
+
+   28 type_enums: type_enum type_enums
+   29           | %empty
+
+   30 type_enum: ident pair_list SEMICOLON
+
+   31 type_list: types
+   32          | %empty
+
+   33 types: type ',' types
+   34      | type
+
+   35 type: ident
+
+   36 void: VOID
+
+   37 type_or_void: type
+   38             | void
+
+   39 formal_param_list: formal_params
+   40                  | %empty
+
+   41 formal_params: formal_param ',' formal_params
+   42              | formal_param
+
+   43 formal_param: type ident
+
+   44 ident: IDENT
+
+   45 ident_list: '{' idents '}'
+   46           | ident
+
+   47 idents: ident SEMICOLON idents
+   48       | ident ',' idents
+   49       | ident idents
+   50       | %empty
+
+   51 pair_list: ',' pairs
+   52          | %empty
+
+   53 pairs: pair ',' pairs
+   54      | pair
+
+   55 pair: ident '=' STRING
+   56     | ident '=' ident
+   57     | STRING
+
+   58 statement_list: '{' statements '}'
+
+   59 statements: statement statements
+   60           | %empty
+
+   61 expr_list: expr ',' expr_list
+   62          | expr
+   63          | %empty
+
+   64 statement: expr SEMICOLON
+   65          | expr ASSIGN expr SEMICOLON
+   66          | ENQUEUE '(' var ',' type pair_list ')' statement_list
+   67          | PEEK '(' var ',' type ')' statement_list
+   68          | COPY_HEAD '(' var ',' var pair_list ')' SEMICOLON
+   69          | CHECK_ALLOCATE '(' var ')' SEMICOLON
+   70          | CHECK_STOP_SLOTS '(' var ',' STRING ',' STRING ')' SEMICOLON
+   71          | if_statement
+   72          | RETURN expr SEMICOLON
+
+   73 if_statement: IF '(' expr ')' statement_list ELSE statement_list
+   74             | IF '(' expr ')' statement_list
+   75             | IF '(' expr ')' statement_list ELSE if_statement
+
+   76 expr: var
+   77     | literal
+   78     | enumeration
+   79     | ident '(' expr_list ')'
+   80     | THIS DOT var '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   81     | THIS DOT var '[' expr ']' DOT var DOT field
+   82     | CHIP '[' expr ']' DOT var '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' DOT var '[' expr ']' DOT var DOT field
+   84     | expr DOT field
+   85     | expr DOT ident '(' expr_list ')'
+   86     | type DOUBLE_COLON ident '(' expr_list ')'
+   87     | expr '[' expr_list ']'
+   88     | expr STAR expr
+   89     | expr SLASH expr
+   90     | expr PLUS expr
+   91     | expr DASH expr
+   92     | expr '<' expr
+   93     | expr '>' expr
+   94     | expr LE expr
+   95     | expr GE expr
+   96     | expr EQ expr
+   97     | expr NE expr
+   98     | expr AND expr
+   99     | expr OR expr
+  100     | expr RIGHTSHIFT expr
+  101     | expr LEFTSHIFT expr
+  102     | '(' expr ')'
+
+  103 literal: STRING
+  104        | NUMBER
+  105        | FLOATNUMBER
+  106        | LIT_BOOL
+
+  107 enumeration: ident ':' ident
+
+  108 var: ident
+
+  109 field: ident
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 5 6 7 8 9 10 11 12 13 14 15 17 18 19 20 27 66 67 68 69 70
+    73 74 75 79 80 82 85 86 102
+')' (41) 5 6 7 8 9 10 11 12 13 14 15 17 18 19 20 27 66 67 68 69 70
+    73 74 75 79 80 82 85 86 102
+',' (44) 7 8 9 10 33 41 48 51 53 61 66 67 68 70
+':' (58) 107
+'<' (60) 92
+'=' (61) 55 56
+'>' (62) 93
+'[' (91) 80 81 82 83 87
+']' (93) 80 81 82 83 87
+'{' (123) 5 12 13 14 15 45 58
+'}' (125) 5 12 13 14 15 45 58
+error (256)
+IDENT (258) 44
+STRING (259) 55 57 70 103
+NUMBER (260) 104
+FLOATNUMBER (261) 105
+LIT_BOOL (262) 106
+VOID (263) 36
+IMBED (264)
+IMBED_TYPE (265)
+CHIP (266) 82 83
+THIS (267) 80 81
+ASSIGN (268) 24 65
+DOUBLE_COLON (269) 86
+DOT (270) 80 81 82 83 84 85
+SEMICOLON (271) 8 11 16 17 18 23 24 27 30 47 64 65 68 69 70 72
+COLON (272)
+GLOBAL_DECL (273) 13
+MACHINE_DECL (274) 5
+IN_PORT_DECL (275) 7
+OUT_PORT_DECL (276) 8
+PEEK (277) 67
+ENQUEUE (278) 66
+COPY_HEAD (279) 68
+CHECK_ALLOCATE (280) 69
+CHECK_STOP_SLOTS (281) 70
+DEBUG_EXPR_TOKEN (282)
+DEBUG_MSG_TOKEN (283)
+ACTION_DECL (284) 6
+TRANSITION_DECL (285) 9 10
+TYPE_DECL (286)
+STRUCT_DECL (287) 14
+EXTERN_TYPE_DECL (288) 11 12
+ENUM_DECL (289) 15
+TYPE_FIELD (290)
+OTHER (291)
+IF (292) 73 74 75
+ELSE (293) 73 75
+RETURN (294) 72
+EQ (295) 96
+NE (296) 97
+LE (297) 94
+GE (298) 95
+NOT (299)
+AND (300) 98
+OR (301) 99
+PLUS (302) 90
+DASH (303) 91
+STAR (304) 88
+SLASH (305) 89
+RIGHTSHIFT (306) 100
+LEFTSHIFT (307) 101
+
+
+Nonterminals, with rules where they appear
+
+$accept (64)
+    on left: 0
+file (65)
+    on left: 1, on right: 0
+decl_list (66)
+    on left: 2, on right: 1 5
+decls (67)
+    on left: 3 4, on right: 2 3
+decl (68)
+    on left: 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20, on right:
+    3
+type_members (69)
+    on left: 21 22, on right: 13 14 21
+type_member (70)
+    on left: 23 24, on right: 21
+type_methods (71)
+    on left: 25 26, on right: 12 25
+type_method (72)
+    on left: 27, on right: 25
+type_enums (73)
+    on left: 28 29, on right: 15 28
+type_enum (74)
+    on left: 30, on right: 28
+type_list (75)
+    on left: 31 32, on right: 27
+types (76)
+    on left: 33 34, on right: 31 33
+type (77)
+    on left: 35, on right: 7 8 11 12 13 14 15 16 17 19 23 24 33 34
+    37 43 66 67 86
+void (78)
+    on left: 36, on right: 18 20 38
+type_or_void (79)
+    on left: 37 38, on right: 27
+formal_param_list (80)
+    on left: 39 40, on right: 17 18 19 20
+formal_params (81)
+    on left: 41 42, on right: 39 41
+formal_param (82)
+    on left: 43, on right: 41 42
+ident (83)
+    on left: 44, on right: 5 6 7 8 9 16 17 18 19 20 23 24 27 30 35
+    43 46 47 48 49 55 56 79 80 82 85 86 107 108 109
+ident_list (84)
+    on left: 45 46, on right: 9 10
+idents (85)
+    on left: 47 48 49 50, on right: 45 47 48 49
+pair_list (86)
+    on left: 51 52, on right: 5 6 7 8 9 10 11 12 13 14 15 16 17 18
+    19 20 23 27 30 66 68
+pairs (87)
+    on left: 53 54, on right: 51 53
+pair (88)
+    on left: 55 56 57, on right: 53 54
+statement_list (89)
+    on left: 58, on right: 6 7 19 20 66 67 73 74 75
+statements (90)
+    on left: 59 60, on right: 58 59
+expr_list (91)
+    on left: 61 62 63, on right: 61 79 80 82 85 86 87
+statement (92)
+    on left: 64 65 66 67 68 69 70 71 72, on right: 59
+if_statement (93)
+    on left: 73 74 75, on right: 71 75
+expr (94)
+    on left: 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93
+    94 95 96 97 98 99 100 101 102, on right: 24 61 62 64 65 72 73 74
+    75 80 81 82 83 84 85 87 88 89 90 91 92 93 94 95 96 97 98 99 100
+    101 102
+literal (95)
+    on left: 103 104 105 106, on right: 77
+enumeration (96)
+    on left: 107, on right: 78
+var (97)
+    on left: 108, on right: 7 8 66 67 68 69 70 76 80 81 82 83
+field (98)
+    on left: 109, on right: 81 83 84
+
+
+State 0
+
+    0 $accept: . file $end
+
+    IDENT             shift, and go to state 1
+    VOID              shift, and go to state 2
+    GLOBAL_DECL       shift, and go to state 3
+    MACHINE_DECL      shift, and go to state 4
+    IN_PORT_DECL      shift, and go to state 5
+    OUT_PORT_DECL     shift, and go to state 6
+    ACTION_DECL       shift, and go to state 7
+    TRANSITION_DECL   shift, and go to state 8
+    STRUCT_DECL       shift, and go to state 9
+    EXTERN_TYPE_DECL  shift, and go to state 10
+    ENUM_DECL         shift, and go to state 11
+
+    $default  reduce using rule 4 (decls)
+
+    file       go to state 12
+    decl_list  go to state 13
+    decls      go to state 14
+    decl       go to state 15
+    type       go to state 16
+    void       go to state 17
+    ident      go to state 18
+
+
+State 1
+
+   44 ident: IDENT .
+
+    $default  reduce using rule 44 (ident)
+
+
+State 2
+
+   36 void: VOID .
+
+    $default  reduce using rule 36 (void)
+
+
+State 3
+
+   13 decl: GLOBAL_DECL . '(' type pair_list ')' '{' type_members '}'
+
+    '('  shift, and go to state 19
+
+
+State 4
+
+    5 decl: MACHINE_DECL . '(' ident pair_list ')' '{' decl_list '}'
+
+    '('  shift, and go to state 20
+
+
+State 5
+
+    7 decl: IN_PORT_DECL . '(' ident ',' type ',' var pair_list ')' statement_list
+
+    '('  shift, and go to state 21
+
+
+State 6
+
+    8 decl: OUT_PORT_DECL . '(' ident ',' type ',' var pair_list ')' SEMICOLON
+
+    '('  shift, and go to state 22
+
+
+State 7
+
+    6 decl: ACTION_DECL . '(' ident pair_list ')' statement_list
+
+    '('  shift, and go to state 23
+
+
+State 8
+
+    9 decl: TRANSITION_DECL . '(' ident_list ',' ident_list ',' ident pair_list ')' ident_list
+   10     | TRANSITION_DECL . '(' ident_list ',' ident_list pair_list ')' ident_list
+
+    '('  shift, and go to state 24
+
+
+State 9
+
+   14 decl: STRUCT_DECL . '(' type pair_list ')' '{' type_members '}'
+
+    '('  shift, and go to state 25
+
+
+State 10
+
+   11 decl: EXTERN_TYPE_DECL . '(' type pair_list ')' SEMICOLON
+   12     | EXTERN_TYPE_DECL . '(' type pair_list ')' '{' type_methods '}'
+
+    '('  shift, and go to state 26
+
+
+State 11
+
+   15 decl: ENUM_DECL . '(' type pair_list ')' '{' type_enums '}'
+
+    '('  shift, and go to state 27
+
+
+State 12
+
+    0 $accept: file . $end
+
+    $end  shift, and go to state 28
+
+
+State 13
+
+    1 file: decl_list .
+
+    $default  reduce using rule 1 (file)
+
+
+State 14
+
+    2 decl_list: decls .
+
+    $default  reduce using rule 2 (decl_list)
+
+
+State 15
+
+    3 decls: decl . decls
+
+    IDENT             shift, and go to state 1
+    VOID              shift, and go to state 2
+    GLOBAL_DECL       shift, and go to state 3
+    MACHINE_DECL      shift, and go to state 4
+    IN_PORT_DECL      shift, and go to state 5
+    OUT_PORT_DECL     shift, and go to state 6
+    ACTION_DECL       shift, and go to state 7
+    TRANSITION_DECL   shift, and go to state 8
+    STRUCT_DECL       shift, and go to state 9
+    EXTERN_TYPE_DECL  shift, and go to state 10
+    ENUM_DECL         shift, and go to state 11
+
+    $default  reduce using rule 4 (decls)
+
+    decls  go to state 29
+    decl   go to state 15
+    type   go to state 16
+    void   go to state 17
+    ident  go to state 18
+
+
+State 16
+
+   16 decl: type . ident pair_list SEMICOLON
+   17     | type . ident '(' formal_param_list ')' pair_list SEMICOLON
+   19     | type . ident '(' formal_param_list ')' pair_list statement_list
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 30
+
+
+State 17
+
+   18 decl: void . ident '(' formal_param_list ')' pair_list SEMICOLON
+   20     | void . ident '(' formal_param_list ')' pair_list statement_list
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 31
+
+
+State 18
+
+   35 type: ident .
+
+    $default  reduce using rule 35 (type)
+
+
+State 19
+
+   13 decl: GLOBAL_DECL '(' . type pair_list ')' '{' type_members '}'
+
+    IDENT  shift, and go to state 1
+
+    type   go to state 32
+    ident  go to state 18
+
+
+State 20
+
+    5 decl: MACHINE_DECL '(' . ident pair_list ')' '{' decl_list '}'
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 33
+
+
+State 21
+
+    7 decl: IN_PORT_DECL '(' . ident ',' type ',' var pair_list ')' statement_list
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 34
+
+
+State 22
+
+    8 decl: OUT_PORT_DECL '(' . ident ',' type ',' var pair_list ')' SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 35
+
+
+State 23
+
+    6 decl: ACTION_DECL '(' . ident pair_list ')' statement_list
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 36
+
+
+State 24
+
+    9 decl: TRANSITION_DECL '(' . ident_list ',' ident_list ',' ident pair_list ')' ident_list
+   10     | TRANSITION_DECL '(' . ident_list ',' ident_list pair_list ')' ident_list
+
+    IDENT  shift, and go to state 1
+    '{'    shift, and go to state 37
+
+    ident       go to state 38
+    ident_list  go to state 39
+
+
+State 25
+
+   14 decl: STRUCT_DECL '(' . type pair_list ')' '{' type_members '}'
+
+    IDENT  shift, and go to state 1
+
+    type   go to state 40
+    ident  go to state 18
+
+
+State 26
+
+   11 decl: EXTERN_TYPE_DECL '(' . type pair_list ')' SEMICOLON
+   12     | EXTERN_TYPE_DECL '(' . type pair_list ')' '{' type_methods '}'
+
+    IDENT  shift, and go to state 1
+
+    type   go to state 41
+    ident  go to state 18
+
+
+State 27
+
+   15 decl: ENUM_DECL '(' . type pair_list ')' '{' type_enums '}'
+
+    IDENT  shift, and go to state 1
+
+    type   go to state 42
+    ident  go to state 18
+
+
+State 28
+
+    0 $accept: file $end .
+
+    $default  accept
+
+
+State 29
+
+    3 decls: decl decls .
+
+    $default  reduce using rule 3 (decls)
+
+
+State 30
+
+   16 decl: type ident . pair_list SEMICOLON
+   17     | type ident . '(' formal_param_list ')' pair_list SEMICOLON
+   19     | type ident . '(' formal_param_list ')' pair_list statement_list
+
+    '('  shift, and go to state 43
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 45
+
+
+State 31
+
+   18 decl: void ident . '(' formal_param_list ')' pair_list SEMICOLON
+   20     | void ident . '(' formal_param_list ')' pair_list statement_list
+
+    '('  shift, and go to state 46
+
+
+State 32
+
+   13 decl: GLOBAL_DECL '(' type . pair_list ')' '{' type_members '}'
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 47
+
+
+State 33
+
+    5 decl: MACHINE_DECL '(' ident . pair_list ')' '{' decl_list '}'
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 48
+
+
+State 34
+
+    7 decl: IN_PORT_DECL '(' ident . ',' type ',' var pair_list ')' statement_list
+
+    ','  shift, and go to state 49
+
+
+State 35
+
+    8 decl: OUT_PORT_DECL '(' ident . ',' type ',' var pair_list ')' SEMICOLON
+
+    ','  shift, and go to state 50
+
+
+State 36
+
+    6 decl: ACTION_DECL '(' ident . pair_list ')' statement_list
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 51
+
+
+State 37
+
+   45 ident_list: '{' . idents '}'
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 50 (idents)
+
+    ident   go to state 52
+    idents  go to state 53
+
+
+State 38
+
+   46 ident_list: ident .
+
+    $default  reduce using rule 46 (ident_list)
+
+
+State 39
+
+    9 decl: TRANSITION_DECL '(' ident_list . ',' ident_list ',' ident pair_list ')' ident_list
+   10     | TRANSITION_DECL '(' ident_list . ',' ident_list pair_list ')' ident_list
+
+    ','  shift, and go to state 54
+
+
+State 40
+
+   14 decl: STRUCT_DECL '(' type . pair_list ')' '{' type_members '}'
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 55
+
+
+State 41
+
+   11 decl: EXTERN_TYPE_DECL '(' type . pair_list ')' SEMICOLON
+   12     | EXTERN_TYPE_DECL '(' type . pair_list ')' '{' type_methods '}'
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 56
+
+
+State 42
+
+   15 decl: ENUM_DECL '(' type . pair_list ')' '{' type_enums '}'
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 57
+
+
+State 43
+
+   17 decl: type ident '(' . formal_param_list ')' pair_list SEMICOLON
+   19     | type ident '(' . formal_param_list ')' pair_list statement_list
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 40 (formal_param_list)
+
+    type               go to state 58
+    formal_param_list  go to state 59
+    formal_params      go to state 60
+    formal_param       go to state 61
+    ident              go to state 18
+
+
+State 44
+
+   51 pair_list: ',' . pairs
+
+    IDENT   shift, and go to state 1
+    STRING  shift, and go to state 62
+
+    ident  go to state 63
+    pairs  go to state 64
+    pair   go to state 65
+
+
+State 45
+
+   16 decl: type ident pair_list . SEMICOLON
+
+    SEMICOLON  shift, and go to state 66
+
+
+State 46
+
+   18 decl: void ident '(' . formal_param_list ')' pair_list SEMICOLON
+   20     | void ident '(' . formal_param_list ')' pair_list statement_list
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 40 (formal_param_list)
+
+    type               go to state 58
+    formal_param_list  go to state 67
+    formal_params      go to state 60
+    formal_param       go to state 61
+    ident              go to state 18
+
+
+State 47
+
+   13 decl: GLOBAL_DECL '(' type pair_list . ')' '{' type_members '}'
+
+    ')'  shift, and go to state 68
+
+
+State 48
+
+    5 decl: MACHINE_DECL '(' ident pair_list . ')' '{' decl_list '}'
+
+    ')'  shift, and go to state 69
+
+
+State 49
+
+    7 decl: IN_PORT_DECL '(' ident ',' . type ',' var pair_list ')' statement_list
+
+    IDENT  shift, and go to state 1
+
+    type   go to state 70
+    ident  go to state 18
+
+
+State 50
+
+    8 decl: OUT_PORT_DECL '(' ident ',' . type ',' var pair_list ')' SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    type   go to state 71
+    ident  go to state 18
+
+
+State 51
+
+    6 decl: ACTION_DECL '(' ident pair_list . ')' statement_list
+
+    ')'  shift, and go to state 72
+
+
+State 52
+
+   47 idents: ident . SEMICOLON idents
+   48       | ident . ',' idents
+   49       | ident . idents
+
+    IDENT      shift, and go to state 1
+    SEMICOLON  shift, and go to state 73
+    ','        shift, and go to state 74
+
+    $default  reduce using rule 50 (idents)
+
+    ident   go to state 52
+    idents  go to state 75
+
+
+State 53
+
+   45 ident_list: '{' idents . '}'
+
+    '}'  shift, and go to state 76
+
+
+State 54
+
+    9 decl: TRANSITION_DECL '(' ident_list ',' . ident_list ',' ident pair_list ')' ident_list
+   10     | TRANSITION_DECL '(' ident_list ',' . ident_list pair_list ')' ident_list
+
+    IDENT  shift, and go to state 1
+    '{'    shift, and go to state 37
+
+    ident       go to state 38
+    ident_list  go to state 77
+
+
+State 55
+
+   14 decl: STRUCT_DECL '(' type pair_list . ')' '{' type_members '}'
+
+    ')'  shift, and go to state 78
+
+
+State 56
+
+   11 decl: EXTERN_TYPE_DECL '(' type pair_list . ')' SEMICOLON
+   12     | EXTERN_TYPE_DECL '(' type pair_list . ')' '{' type_methods '}'
+
+    ')'  shift, and go to state 79
+
+
+State 57
+
+   15 decl: ENUM_DECL '(' type pair_list . ')' '{' type_enums '}'
+
+    ')'  shift, and go to state 80
+
+
+State 58
+
+   43 formal_param: type . ident
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 81
+
+
+State 59
+
+   17 decl: type ident '(' formal_param_list . ')' pair_list SEMICOLON
+   19     | type ident '(' formal_param_list . ')' pair_list statement_list
+
+    ')'  shift, and go to state 82
+
+
+State 60
+
+   39 formal_param_list: formal_params .
+
+    $default  reduce using rule 39 (formal_param_list)
+
+
+State 61
+
+   41 formal_params: formal_param . ',' formal_params
+   42              | formal_param .
+
+    ','  shift, and go to state 83
+
+    $default  reduce using rule 42 (formal_params)
+
+
+State 62
+
+   57 pair: STRING .
+
+    $default  reduce using rule 57 (pair)
+
+
+State 63
+
+   55 pair: ident . '=' STRING
+   56     | ident . '=' ident
+
+    '='  shift, and go to state 84
+
+
+State 64
+
+   51 pair_list: ',' pairs .
+
+    $default  reduce using rule 51 (pair_list)
+
+
+State 65
+
+   53 pairs: pair . ',' pairs
+   54      | pair .
+
+    ','  shift, and go to state 85
+
+    $default  reduce using rule 54 (pairs)
+
+
+State 66
+
+   16 decl: type ident pair_list SEMICOLON .
+
+    $default  reduce using rule 16 (decl)
+
+
+State 67
+
+   18 decl: void ident '(' formal_param_list . ')' pair_list SEMICOLON
+   20     | void ident '(' formal_param_list . ')' pair_list statement_list
+
+    ')'  shift, and go to state 86
+
+
+State 68
+
+   13 decl: GLOBAL_DECL '(' type pair_list ')' . '{' type_members '}'
+
+    '{'  shift, and go to state 87
+
+
+State 69
+
+    5 decl: MACHINE_DECL '(' ident pair_list ')' . '{' decl_list '}'
+
+    '{'  shift, and go to state 88
+
+
+State 70
+
+    7 decl: IN_PORT_DECL '(' ident ',' type . ',' var pair_list ')' statement_list
+
+    ','  shift, and go to state 89
+
+
+State 71
+
+    8 decl: OUT_PORT_DECL '(' ident ',' type . ',' var pair_list ')' SEMICOLON
+
+    ','  shift, and go to state 90
+
+
+State 72
+
+    6 decl: ACTION_DECL '(' ident pair_list ')' . statement_list
+
+    '{'  shift, and go to state 91
+
+    statement_list  go to state 92
+
+
+State 73
+
+   47 idents: ident SEMICOLON . idents
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 50 (idents)
+
+    ident   go to state 52
+    idents  go to state 93
+
+
+State 74
+
+   48 idents: ident ',' . idents
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 50 (idents)
+
+    ident   go to state 52
+    idents  go to state 94
+
+
+State 75
+
+   49 idents: ident idents .
+
+    $default  reduce using rule 49 (idents)
+
+
+State 76
+
+   45 ident_list: '{' idents '}' .
+
+    $default  reduce using rule 45 (ident_list)
+
+
+State 77
+
+    9 decl: TRANSITION_DECL '(' ident_list ',' ident_list . ',' ident pair_list ')' ident_list
+   10     | TRANSITION_DECL '(' ident_list ',' ident_list . pair_list ')' ident_list
+
+    ','  shift, and go to state 95
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 96
+
+
+State 78
+
+   14 decl: STRUCT_DECL '(' type pair_list ')' . '{' type_members '}'
+
+    '{'  shift, and go to state 97
+
+
+State 79
+
+   11 decl: EXTERN_TYPE_DECL '(' type pair_list ')' . SEMICOLON
+   12     | EXTERN_TYPE_DECL '(' type pair_list ')' . '{' type_methods '}'
+
+    SEMICOLON  shift, and go to state 98
+    '{'        shift, and go to state 99
+
+
+State 80
+
+   15 decl: ENUM_DECL '(' type pair_list ')' . '{' type_enums '}'
+
+    '{'  shift, and go to state 100
+
+
+State 81
+
+   43 formal_param: type ident .
+
+    $default  reduce using rule 43 (formal_param)
+
+
+State 82
+
+   17 decl: type ident '(' formal_param_list ')' . pair_list SEMICOLON
+   19     | type ident '(' formal_param_list ')' . pair_list statement_list
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 101
+
+
+State 83
+
+   41 formal_params: formal_param ',' . formal_params
+
+    IDENT  shift, and go to state 1
+
+    type           go to state 58
+    formal_params  go to state 102
+    formal_param   go to state 61
+    ident          go to state 18
+
+
+State 84
+
+   55 pair: ident '=' . STRING
+   56     | ident '=' . ident
+
+    IDENT   shift, and go to state 1
+    STRING  shift, and go to state 103
+
+    ident  go to state 104
+
+
+State 85
+
+   53 pairs: pair ',' . pairs
+
+    IDENT   shift, and go to state 1
+    STRING  shift, and go to state 62
+
+    ident  go to state 63
+    pairs  go to state 105
+    pair   go to state 65
+
+
+State 86
+
+   18 decl: void ident '(' formal_param_list ')' . pair_list SEMICOLON
+   20     | void ident '(' formal_param_list ')' . pair_list statement_list
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 106
+
+
+State 87
+
+   13 decl: GLOBAL_DECL '(' type pair_list ')' '{' . type_members '}'
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 22 (type_members)
+
+    type_members  go to state 107
+    type_member   go to state 108
+    type          go to state 109
+    ident         go to state 18
+
+
+State 88
+
+    5 decl: MACHINE_DECL '(' ident pair_list ')' '{' . decl_list '}'
+
+    IDENT             shift, and go to state 1
+    VOID              shift, and go to state 2
+    GLOBAL_DECL       shift, and go to state 3
+    MACHINE_DECL      shift, and go to state 4
+    IN_PORT_DECL      shift, and go to state 5
+    OUT_PORT_DECL     shift, and go to state 6
+    ACTION_DECL       shift, and go to state 7
+    TRANSITION_DECL   shift, and go to state 8
+    STRUCT_DECL       shift, and go to state 9
+    EXTERN_TYPE_DECL  shift, and go to state 10
+    ENUM_DECL         shift, and go to state 11
+
+    $default  reduce using rule 4 (decls)
+
+    decl_list  go to state 110
+    decls      go to state 14
+    decl       go to state 15
+    type       go to state 16
+    void       go to state 17
+    ident      go to state 18
+
+
+State 89
+
+    7 decl: IN_PORT_DECL '(' ident ',' type ',' . var pair_list ')' statement_list
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 112
+
+
+State 90
+
+    8 decl: OUT_PORT_DECL '(' ident ',' type ',' . var pair_list ')' SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 113
+
+
+State 91
+
+   58 statement_list: '{' . statements '}'
+
+    IDENT             shift, and go to state 1
+    STRING            shift, and go to state 114
+    NUMBER            shift, and go to state 115
+    FLOATNUMBER       shift, and go to state 116
+    LIT_BOOL          shift, and go to state 117
+    CHIP              shift, and go to state 118
+    THIS              shift, and go to state 119
+    PEEK              shift, and go to state 120
+    ENQUEUE           shift, and go to state 121
+    COPY_HEAD         shift, and go to state 122
+    CHECK_ALLOCATE    shift, and go to state 123
+    CHECK_STOP_SLOTS  shift, and go to state 124
+    IF                shift, and go to state 125
+    RETURN            shift, and go to state 126
+    '('               shift, and go to state 127
+
+    $default  reduce using rule 60 (statements)
+
+    type          go to state 128
+    ident         go to state 129
+    statements    go to state 130
+    statement     go to state 131
+    if_statement  go to state 132
+    expr          go to state 133
+    literal       go to state 134
+    enumeration   go to state 135
+    var           go to state 136
+
+
+State 92
+
+    6 decl: ACTION_DECL '(' ident pair_list ')' statement_list .
+
+    $default  reduce using rule 6 (decl)
+
+
+State 93
+
+   47 idents: ident SEMICOLON idents .
+
+    $default  reduce using rule 47 (idents)
+
+
+State 94
+
+   48 idents: ident ',' idents .
+
+    $default  reduce using rule 48 (idents)
+
+
+State 95
+
+    9 decl: TRANSITION_DECL '(' ident_list ',' ident_list ',' . ident pair_list ')' ident_list
+   51 pair_list: ',' . pairs
+
+    IDENT   shift, and go to state 1
+    STRING  shift, and go to state 62
+
+    ident  go to state 137
+    pairs  go to state 64
+    pair   go to state 65
+
+
+State 96
+
+   10 decl: TRANSITION_DECL '(' ident_list ',' ident_list pair_list . ')' ident_list
+
+    ')'  shift, and go to state 138
+
+
+State 97
+
+   14 decl: STRUCT_DECL '(' type pair_list ')' '{' . type_members '}'
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 22 (type_members)
+
+    type_members  go to state 139
+    type_member   go to state 108
+    type          go to state 109
+    ident         go to state 18
+
+
+State 98
+
+   11 decl: EXTERN_TYPE_DECL '(' type pair_list ')' SEMICOLON .
+
+    $default  reduce using rule 11 (decl)
+
+
+State 99
+
+   12 decl: EXTERN_TYPE_DECL '(' type pair_list ')' '{' . type_methods '}'
+
+    IDENT  shift, and go to state 1
+    VOID   shift, and go to state 2
+
+    $default  reduce using rule 26 (type_methods)
+
+    type_methods  go to state 140
+    type_method   go to state 141
+    type          go to state 142
+    void          go to state 143
+    type_or_void  go to state 144
+    ident         go to state 18
+
+
+State 100
+
+   15 decl: ENUM_DECL '(' type pair_list ')' '{' . type_enums '}'
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 29 (type_enums)
+
+    type_enums  go to state 145
+    type_enum   go to state 146
+    ident       go to state 147
+
+
+State 101
+
+   17 decl: type ident '(' formal_param_list ')' pair_list . SEMICOLON
+   19     | type ident '(' formal_param_list ')' pair_list . statement_list
+
+    SEMICOLON  shift, and go to state 148
+    '{'        shift, and go to state 91
+
+    statement_list  go to state 149
+
+
+State 102
+
+   41 formal_params: formal_param ',' formal_params .
+
+    $default  reduce using rule 41 (formal_params)
+
+
+State 103
+
+   55 pair: ident '=' STRING .
+
+    $default  reduce using rule 55 (pair)
+
+
+State 104
+
+   56 pair: ident '=' ident .
+
+    $default  reduce using rule 56 (pair)
+
+
+State 105
+
+   53 pairs: pair ',' pairs .
+
+    $default  reduce using rule 53 (pairs)
+
+
+State 106
+
+   18 decl: void ident '(' formal_param_list ')' pair_list . SEMICOLON
+   20     | void ident '(' formal_param_list ')' pair_list . statement_list
+
+    SEMICOLON  shift, and go to state 150
+    '{'        shift, and go to state 91
+
+    statement_list  go to state 151
+
+
+State 107
+
+   13 decl: GLOBAL_DECL '(' type pair_list ')' '{' type_members . '}'
+
+    '}'  shift, and go to state 152
+
+
+State 108
+
+   21 type_members: type_member . type_members
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 22 (type_members)
+
+    type_members  go to state 153
+    type_member   go to state 108
+    type          go to state 109
+    ident         go to state 18
+
+
+State 109
+
+   23 type_member: type . ident pair_list SEMICOLON
+   24            | type . ident ASSIGN expr SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 154
+
+
+State 110
+
+    5 decl: MACHINE_DECL '(' ident pair_list ')' '{' decl_list . '}'
+
+    '}'  shift, and go to state 155
+
+
+State 111
+
+  108 var: ident .
+
+    $default  reduce using rule 108 (var)
+
+
+State 112
+
+    7 decl: IN_PORT_DECL '(' ident ',' type ',' var . pair_list ')' statement_list
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 156
+
+
+State 113
+
+    8 decl: OUT_PORT_DECL '(' ident ',' type ',' var . pair_list ')' SEMICOLON
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 157
+
+
+State 114
+
+  103 literal: STRING .
+
+    $default  reduce using rule 103 (literal)
+
+
+State 115
+
+  104 literal: NUMBER .
+
+    $default  reduce using rule 104 (literal)
+
+
+State 116
+
+  105 literal: FLOATNUMBER .
+
+    $default  reduce using rule 105 (literal)
+
+
+State 117
+
+  106 literal: LIT_BOOL .
+
+    $default  reduce using rule 106 (literal)
+
+
+State 118
+
+   82 expr: CHIP . '[' expr ']' DOT var '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   83     | CHIP . '[' expr ']' DOT var '[' expr ']' DOT var DOT field
+
+    '['  shift, and go to state 158
+
+
+State 119
+
+   80 expr: THIS . DOT var '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   81     | THIS . DOT var '[' expr ']' DOT var DOT field
+
+    DOT  shift, and go to state 159
+
+
+State 120
+
+   67 statement: PEEK . '(' var ',' type ')' statement_list
+
+    '('  shift, and go to state 160
+
+
+State 121
+
+   66 statement: ENQUEUE . '(' var ',' type pair_list ')' statement_list
+
+    '('  shift, and go to state 161
+
+
+State 122
+
+   68 statement: COPY_HEAD . '(' var ',' var pair_list ')' SEMICOLON
+
+    '('  shift, and go to state 162
+
+
+State 123
+
+   69 statement: CHECK_ALLOCATE . '(' var ')' SEMICOLON
+
+    '('  shift, and go to state 163
+
+
+State 124
+
+   70 statement: CHECK_STOP_SLOTS . '(' var ',' STRING ',' STRING ')' SEMICOLON
+
+    '('  shift, and go to state 164
+
+
+State 125
+
+   73 if_statement: IF . '(' expr ')' statement_list ELSE statement_list
+   74             | IF . '(' expr ')' statement_list
+   75             | IF . '(' expr ')' statement_list ELSE if_statement
+
+    '('  shift, and go to state 165
+
+
+State 126
+
+   72 statement: RETURN . expr SEMICOLON
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 166
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 127
+
+  102 expr: '(' . expr ')'
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 167
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 128
+
+   86 expr: type . DOUBLE_COLON ident '(' expr_list ')'
+
+    DOUBLE_COLON  shift, and go to state 168
+
+
+State 129
+
+   35 type: ident .
+   79 expr: ident . '(' expr_list ')'
+  107 enumeration: ident . ':' ident
+  108 var: ident .
+
+    '('  shift, and go to state 169
+    ':'  shift, and go to state 170
+
+    DOUBLE_COLON  reduce using rule 35 (type)
+    $default      reduce using rule 108 (var)
+
+
+State 130
+
+   58 statement_list: '{' statements . '}'
+
+    '}'  shift, and go to state 171
+
+
+State 131
+
+   59 statements: statement . statements
+
+    IDENT             shift, and go to state 1
+    STRING            shift, and go to state 114
+    NUMBER            shift, and go to state 115
+    FLOATNUMBER       shift, and go to state 116
+    LIT_BOOL          shift, and go to state 117
+    CHIP              shift, and go to state 118
+    THIS              shift, and go to state 119
+    PEEK              shift, and go to state 120
+    ENQUEUE           shift, and go to state 121
+    COPY_HEAD         shift, and go to state 122
+    CHECK_ALLOCATE    shift, and go to state 123
+    CHECK_STOP_SLOTS  shift, and go to state 124
+    IF                shift, and go to state 125
+    RETURN            shift, and go to state 126
+    '('               shift, and go to state 127
+
+    $default  reduce using rule 60 (statements)
+
+    type          go to state 128
+    ident         go to state 129
+    statements    go to state 172
+    statement     go to state 131
+    if_statement  go to state 132
+    expr          go to state 133
+    literal       go to state 134
+    enumeration   go to state 135
+    var           go to state 136
+
+
+State 132
+
+   71 statement: if_statement .
+
+    $default  reduce using rule 71 (statement)
+
+
+State 133
+
+   64 statement: expr . SEMICOLON
+   65          | expr . ASSIGN expr SEMICOLON
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    ASSIGN      shift, and go to state 173
+    DOT         shift, and go to state 174
+    SEMICOLON   shift, and go to state 175
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+
+State 134
+
+   77 expr: literal .
+
+    $default  reduce using rule 77 (expr)
+
+
+State 135
+
+   78 expr: enumeration .
+
+    $default  reduce using rule 78 (expr)
+
+
+State 136
+
+   76 expr: var .
+
+    $default  reduce using rule 76 (expr)
+
+
+State 137
+
+    9 decl: TRANSITION_DECL '(' ident_list ',' ident_list ',' ident . pair_list ')' ident_list
+   55 pair: ident . '=' STRING
+   56     | ident . '=' ident
+
+    ','  shift, and go to state 44
+    '='  shift, and go to state 84
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 191
+
+
+State 138
+
+   10 decl: TRANSITION_DECL '(' ident_list ',' ident_list pair_list ')' . ident_list
+
+    IDENT  shift, and go to state 1
+    '{'    shift, and go to state 37
+
+    ident       go to state 38
+    ident_list  go to state 192
+
+
+State 139
+
+   14 decl: STRUCT_DECL '(' type pair_list ')' '{' type_members . '}'
+
+    '}'  shift, and go to state 193
+
+
+State 140
+
+   12 decl: EXTERN_TYPE_DECL '(' type pair_list ')' '{' type_methods . '}'
+
+    '}'  shift, and go to state 194
+
+
+State 141
+
+   25 type_methods: type_method . type_methods
+
+    IDENT  shift, and go to state 1
+    VOID   shift, and go to state 2
+
+    $default  reduce using rule 26 (type_methods)
+
+    type_methods  go to state 195
+    type_method   go to state 141
+    type          go to state 142
+    void          go to state 143
+    type_or_void  go to state 144
+    ident         go to state 18
+
+
+State 142
+
+   37 type_or_void: type .
+
+    $default  reduce using rule 37 (type_or_void)
+
+
+State 143
+
+   38 type_or_void: void .
+
+    $default  reduce using rule 38 (type_or_void)
+
+
+State 144
+
+   27 type_method: type_or_void . ident '(' type_list ')' pair_list SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 196
+
+
+State 145
+
+   15 decl: ENUM_DECL '(' type pair_list ')' '{' type_enums . '}'
+
+    '}'  shift, and go to state 197
+
+
+State 146
+
+   28 type_enums: type_enum . type_enums
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 29 (type_enums)
+
+    type_enums  go to state 198
+    type_enum   go to state 146
+    ident       go to state 147
+
+
+State 147
+
+   30 type_enum: ident . pair_list SEMICOLON
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 199
+
+
+State 148
+
+   17 decl: type ident '(' formal_param_list ')' pair_list SEMICOLON .
+
+    $default  reduce using rule 17 (decl)
+
+
+State 149
+
+   19 decl: type ident '(' formal_param_list ')' pair_list statement_list .
+
+    $default  reduce using rule 19 (decl)
+
+
+State 150
+
+   18 decl: void ident '(' formal_param_list ')' pair_list SEMICOLON .
+
+    $default  reduce using rule 18 (decl)
+
+
+State 151
+
+   20 decl: void ident '(' formal_param_list ')' pair_list statement_list .
+
+    $default  reduce using rule 20 (decl)
+
+
+State 152
+
+   13 decl: GLOBAL_DECL '(' type pair_list ')' '{' type_members '}' .
+
+    $default  reduce using rule 13 (decl)
+
+
+State 153
+
+   21 type_members: type_member type_members .
+
+    $default  reduce using rule 21 (type_members)
+
+
+State 154
+
+   23 type_member: type ident . pair_list SEMICOLON
+   24            | type ident . ASSIGN expr SEMICOLON
+
+    ASSIGN  shift, and go to state 200
+    ','     shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 201
+
+
+State 155
+
+    5 decl: MACHINE_DECL '(' ident pair_list ')' '{' decl_list '}' .
+
+    $default  reduce using rule 5 (decl)
+
+
+State 156
+
+    7 decl: IN_PORT_DECL '(' ident ',' type ',' var pair_list . ')' statement_list
+
+    ')'  shift, and go to state 202
+
+
+State 157
+
+    8 decl: OUT_PORT_DECL '(' ident ',' type ',' var pair_list . ')' SEMICOLON
+
+    ')'  shift, and go to state 203
+
+
+State 158
+
+   82 expr: CHIP '[' . expr ']' DOT var '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   83     | CHIP '[' . expr ']' DOT var '[' expr ']' DOT var DOT field
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 204
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 159
+
+   80 expr: THIS DOT . var '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   81     | THIS DOT . var '[' expr ']' DOT var DOT field
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 205
+
+
+State 160
+
+   67 statement: PEEK '(' . var ',' type ')' statement_list
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 206
+
+
+State 161
+
+   66 statement: ENQUEUE '(' . var ',' type pair_list ')' statement_list
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 207
+
+
+State 162
+
+   68 statement: COPY_HEAD '(' . var ',' var pair_list ')' SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 208
+
+
+State 163
+
+   69 statement: CHECK_ALLOCATE '(' . var ')' SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 209
+
+
+State 164
+
+   70 statement: CHECK_STOP_SLOTS '(' . var ',' STRING ',' STRING ')' SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 210
+
+
+State 165
+
+   73 if_statement: IF '(' . expr ')' statement_list ELSE statement_list
+   74             | IF '(' . expr ')' statement_list
+   75             | IF '(' . expr ')' statement_list ELSE if_statement
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 211
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 166
+
+   72 statement: RETURN expr . SEMICOLON
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    SEMICOLON   shift, and go to state 212
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+
+State 167
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+  102     | '(' expr . ')'
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+    ')'         shift, and go to state 213
+
+
+State 168
+
+   86 expr: type DOUBLE_COLON . ident '(' expr_list ')'
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 214
+
+
+State 169
+
+   79 expr: ident '(' . expr_list ')'
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    $default  reduce using rule 63 (expr_list)
+
+    type         go to state 128
+    ident        go to state 129
+    expr_list    go to state 215
+    expr         go to state 216
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 170
+
+  107 enumeration: ident ':' . ident
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 217
+
+
+State 171
+
+   58 statement_list: '{' statements '}' .
+
+    $default  reduce using rule 58 (statement_list)
+
+
+State 172
+
+   59 statements: statement statements .
+
+    $default  reduce using rule 59 (statements)
+
+
+State 173
+
+   65 statement: expr ASSIGN . expr SEMICOLON
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 218
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 174
+
+   84 expr: expr DOT . field
+   85     | expr DOT . ident '(' expr_list ')'
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 219
+    field  go to state 220
+
+
+State 175
+
+   64 statement: expr SEMICOLON .
+
+    $default  reduce using rule 64 (statement)
+
+
+State 176
+
+   96 expr: expr EQ . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 221
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 177
+
+   97 expr: expr NE . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 222
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 178
+
+   92 expr: expr '<' . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 223
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 179
+
+   93 expr: expr '>' . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 224
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 180
+
+   94 expr: expr LE . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 225
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 181
+
+   95 expr: expr GE . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 226
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 182
+
+   98 expr: expr AND . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 227
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 183
+
+   99 expr: expr OR . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 228
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 184
+
+   90 expr: expr PLUS . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 229
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 185
+
+   91 expr: expr DASH . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 230
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 186
+
+   88 expr: expr STAR . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 231
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 187
+
+   89 expr: expr SLASH . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 232
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 188
+
+  100 expr: expr RIGHTSHIFT . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 233
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 189
+
+  101 expr: expr LEFTSHIFT . expr
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 234
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 190
+
+   87 expr: expr '[' . expr_list ']'
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    $default  reduce using rule 63 (expr_list)
+
+    type         go to state 128
+    ident        go to state 129
+    expr_list    go to state 235
+    expr         go to state 216
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 191
+
+    9 decl: TRANSITION_DECL '(' ident_list ',' ident_list ',' ident pair_list . ')' ident_list
+
+    ')'  shift, and go to state 236
+
+
+State 192
+
+   10 decl: TRANSITION_DECL '(' ident_list ',' ident_list pair_list ')' ident_list .
+
+    $default  reduce using rule 10 (decl)
+
+
+State 193
+
+   14 decl: STRUCT_DECL '(' type pair_list ')' '{' type_members '}' .
+
+    $default  reduce using rule 14 (decl)
+
+
+State 194
+
+   12 decl: EXTERN_TYPE_DECL '(' type pair_list ')' '{' type_methods '}' .
+
+    $default  reduce using rule 12 (decl)
+
+
+State 195
+
+   25 type_methods: type_method type_methods .
+
+    $default  reduce using rule 25 (type_methods)
+
+
+State 196
+
+   27 type_method: type_or_void ident . '(' type_list ')' pair_list SEMICOLON
+
+    '('  shift, and go to state 237
+
+
+State 197
+
+   15 decl: ENUM_DECL '(' type pair_list ')' '{' type_enums '}' .
+
+    $default  reduce using rule 15 (decl)
+
+
+State 198
+
+   28 type_enums: type_enum type_enums .
+
+    $default  reduce using rule 28 (type_enums)
+
+
+State 199
+
+   30 type_enum: ident pair_list . SEMICOLON
+
+    SEMICOLON  shift, and go to state 238
+
+
+State 200
+
+   24 type_member: type ident ASSIGN . expr SEMICOLON
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 239
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 201
+
+   23 type_member: type ident pair_list . SEMICOLON
+
+    SEMICOLON  shift, and go to state 240
+
+
+State 202
+
+    7 decl: IN_PORT_DECL '(' ident ',' type ',' var pair_list ')' . statement_list
+
+    '{'  shift, and go to state 91
+
+    statement_list  go to state 241
+
+
+State 203
+
+    8 decl: OUT_PORT_DECL '(' ident ',' type ',' var pair_list ')' . SEMICOLON
+
+    SEMICOLON  shift, and go to state 242
+
+
+State 204
+
+   82 expr: CHIP '[' expr . ']' DOT var '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr . ']' DOT var '[' expr ']' DOT var DOT field
+   84     | expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+    ']'         shift, and go to state 243
+
+
+State 205
+
+   80 expr: THIS DOT var . '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   81     | THIS DOT var . '[' expr ']' DOT var DOT field
+
+    '['  shift, and go to state 244
+
+
+State 206
+
+   67 statement: PEEK '(' var . ',' type ')' statement_list
+
+    ','  shift, and go to state 245
+
+
+State 207
+
+   66 statement: ENQUEUE '(' var . ',' type pair_list ')' statement_list
+
+    ','  shift, and go to state 246
+
+
+State 208
+
+   68 statement: COPY_HEAD '(' var . ',' var pair_list ')' SEMICOLON
+
+    ','  shift, and go to state 247
+
+
+State 209
+
+   69 statement: CHECK_ALLOCATE '(' var . ')' SEMICOLON
+
+    ')'  shift, and go to state 248
+
+
+State 210
+
+   70 statement: CHECK_STOP_SLOTS '(' var . ',' STRING ',' STRING ')' SEMICOLON
+
+    ','  shift, and go to state 249
+
+
+State 211
+
+   73 if_statement: IF '(' expr . ')' statement_list ELSE statement_list
+   74             | IF '(' expr . ')' statement_list
+   75             | IF '(' expr . ')' statement_list ELSE if_statement
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+    ')'         shift, and go to state 250
+
+
+State 212
+
+   72 statement: RETURN expr SEMICOLON .
+
+    $default  reduce using rule 72 (statement)
+
+
+State 213
+
+  102 expr: '(' expr ')' .
+
+    $default  reduce using rule 102 (expr)
+
+
+State 214
+
+   86 expr: type DOUBLE_COLON ident . '(' expr_list ')'
+
+    '('  shift, and go to state 251
+
+
+State 215
+
+   79 expr: ident '(' expr_list . ')'
+
+    ')'  shift, and go to state 252
+
+
+State 216
+
+   61 expr_list: expr . ',' expr_list
+   62          | expr .
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+    ','         shift, and go to state 253
+
+    $default  reduce using rule 62 (expr_list)
+
+
+State 217
+
+  107 enumeration: ident ':' ident .
+
+    $default  reduce using rule 107 (enumeration)
+
+
+State 218
+
+   65 statement: expr ASSIGN expr . SEMICOLON
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    SEMICOLON   shift, and go to state 254
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+
+State 219
+
+   85 expr: expr DOT ident . '(' expr_list ')'
+  109 field: ident .
+
+    '('  shift, and go to state 255
+
+    $default  reduce using rule 109 (field)
+
+
+State 220
+
+   84 expr: expr DOT field .
+
+    $default  reduce using rule 84 (expr)
+
+
+State 221
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   96     | expr EQ expr .
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    EQ  error (nonassociative)
+    NE  error (nonassociative)
+
+    RIGHTSHIFT  [reduce using rule 96 (expr)]
+    LEFTSHIFT   [reduce using rule 96 (expr)]
+    $default    reduce using rule 96 (expr)
+
+
+State 222
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   97     | expr NE expr .
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    EQ  error (nonassociative)
+    NE  error (nonassociative)
+
+    RIGHTSHIFT  [reduce using rule 97 (expr)]
+    LEFTSHIFT   [reduce using rule 97 (expr)]
+    $default    reduce using rule 97 (expr)
+
+
+State 223
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   92     | expr '<' expr .
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    '<'  error (nonassociative)
+    '>'  error (nonassociative)
+    LE   error (nonassociative)
+    GE   error (nonassociative)
+
+    RIGHTSHIFT  [reduce using rule 92 (expr)]
+    LEFTSHIFT   [reduce using rule 92 (expr)]
+    $default    reduce using rule 92 (expr)
+
+
+State 224
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   93     | expr '>' expr .
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    '<'  error (nonassociative)
+    '>'  error (nonassociative)
+    LE   error (nonassociative)
+    GE   error (nonassociative)
+
+    RIGHTSHIFT  [reduce using rule 93 (expr)]
+    LEFTSHIFT   [reduce using rule 93 (expr)]
+    $default    reduce using rule 93 (expr)
+
+
+State 225
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   94     | expr LE expr .
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    '<'  error (nonassociative)
+    '>'  error (nonassociative)
+    LE   error (nonassociative)
+    GE   error (nonassociative)
+
+    RIGHTSHIFT  [reduce using rule 94 (expr)]
+    LEFTSHIFT   [reduce using rule 94 (expr)]
+    $default    reduce using rule 94 (expr)
+
+
+State 226
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   95     | expr GE expr .
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    '<'  error (nonassociative)
+    '>'  error (nonassociative)
+    LE   error (nonassociative)
+    GE   error (nonassociative)
+
+    RIGHTSHIFT  [reduce using rule 95 (expr)]
+    LEFTSHIFT   [reduce using rule 95 (expr)]
+    $default    reduce using rule 95 (expr)
+
+
+State 227
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   98     | expr AND expr .
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    RIGHTSHIFT  [reduce using rule 98 (expr)]
+    LEFTSHIFT   [reduce using rule 98 (expr)]
+    $default    reduce using rule 98 (expr)
+
+
+State 228
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+   99     | expr OR expr .
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    RIGHTSHIFT  [reduce using rule 99 (expr)]
+    LEFTSHIFT   [reduce using rule 99 (expr)]
+    $default    reduce using rule 99 (expr)
+
+
+State 229
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   90     | expr PLUS expr .
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    RIGHTSHIFT  [reduce using rule 90 (expr)]
+    LEFTSHIFT   [reduce using rule 90 (expr)]
+    $default    reduce using rule 90 (expr)
+
+
+State 230
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   91     | expr DASH expr .
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    RIGHTSHIFT  [reduce using rule 91 (expr)]
+    LEFTSHIFT   [reduce using rule 91 (expr)]
+    $default    reduce using rule 91 (expr)
+
+
+State 231
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   88     | expr STAR expr .
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    RIGHTSHIFT  [reduce using rule 88 (expr)]
+    LEFTSHIFT   [reduce using rule 88 (expr)]
+    $default    reduce using rule 88 (expr)
+
+
+State 232
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   89     | expr SLASH expr .
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    RIGHTSHIFT  [reduce using rule 89 (expr)]
+    LEFTSHIFT   [reduce using rule 89 (expr)]
+    $default    reduce using rule 89 (expr)
+
+
+State 233
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  100     | expr RIGHTSHIFT expr .
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    DOT         [reduce using rule 100 (expr)]
+    EQ          [reduce using rule 100 (expr)]
+    NE          [reduce using rule 100 (expr)]
+    '<'         [reduce using rule 100 (expr)]
+    '>'         [reduce using rule 100 (expr)]
+    LE          [reduce using rule 100 (expr)]
+    GE          [reduce using rule 100 (expr)]
+    AND         [reduce using rule 100 (expr)]
+    OR          [reduce using rule 100 (expr)]
+    PLUS        [reduce using rule 100 (expr)]
+    DASH        [reduce using rule 100 (expr)]
+    STAR        [reduce using rule 100 (expr)]
+    SLASH       [reduce using rule 100 (expr)]
+    RIGHTSHIFT  [reduce using rule 100 (expr)]
+    LEFTSHIFT   [reduce using rule 100 (expr)]
+    '['         [reduce using rule 100 (expr)]
+    $default    reduce using rule 100 (expr)
+
+
+State 234
+
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+  101     | expr LEFTSHIFT expr .
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+    DOT         [reduce using rule 101 (expr)]
+    EQ          [reduce using rule 101 (expr)]
+    NE          [reduce using rule 101 (expr)]
+    '<'         [reduce using rule 101 (expr)]
+    '>'         [reduce using rule 101 (expr)]
+    LE          [reduce using rule 101 (expr)]
+    GE          [reduce using rule 101 (expr)]
+    AND         [reduce using rule 101 (expr)]
+    OR          [reduce using rule 101 (expr)]
+    PLUS        [reduce using rule 101 (expr)]
+    DASH        [reduce using rule 101 (expr)]
+    STAR        [reduce using rule 101 (expr)]
+    SLASH       [reduce using rule 101 (expr)]
+    RIGHTSHIFT  [reduce using rule 101 (expr)]
+    LEFTSHIFT   [reduce using rule 101 (expr)]
+    '['         [reduce using rule 101 (expr)]
+    $default    reduce using rule 101 (expr)
+
+
+State 235
+
+   87 expr: expr '[' expr_list . ']'
+
+    ']'  shift, and go to state 256
+
+
+State 236
+
+    9 decl: TRANSITION_DECL '(' ident_list ',' ident_list ',' ident pair_list ')' . ident_list
+
+    IDENT  shift, and go to state 1
+    '{'    shift, and go to state 37
+
+    ident       go to state 38
+    ident_list  go to state 257
+
+
+State 237
+
+   27 type_method: type_or_void ident '(' . type_list ')' pair_list SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    $default  reduce using rule 32 (type_list)
+
+    type_list  go to state 258
+    types      go to state 259
+    type       go to state 260
+    ident      go to state 18
+
+
+State 238
+
+   30 type_enum: ident pair_list SEMICOLON .
+
+    $default  reduce using rule 30 (type_enum)
+
+
+State 239
+
+   24 type_member: type ident ASSIGN expr . SEMICOLON
+   84 expr: expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    SEMICOLON   shift, and go to state 261
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+
+
+State 240
+
+   23 type_member: type ident pair_list SEMICOLON .
+
+    $default  reduce using rule 23 (type_member)
+
+
+State 241
+
+    7 decl: IN_PORT_DECL '(' ident ',' type ',' var pair_list ')' statement_list .
+
+    $default  reduce using rule 7 (decl)
+
+
+State 242
+
+    8 decl: OUT_PORT_DECL '(' ident ',' type ',' var pair_list ')' SEMICOLON .
+
+    $default  reduce using rule 8 (decl)
+
+
+State 243
+
+   82 expr: CHIP '[' expr ']' . DOT var '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' . DOT var '[' expr ']' DOT var DOT field
+
+    DOT  shift, and go to state 262
+
+
+State 244
+
+   80 expr: THIS DOT var '[' . expr ']' DOT var DOT ident '(' expr_list ')'
+   81     | THIS DOT var '[' . expr ']' DOT var DOT field
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 263
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 245
+
+   67 statement: PEEK '(' var ',' . type ')' statement_list
+
+    IDENT  shift, and go to state 1
+
+    type   go to state 264
+    ident  go to state 18
+
+
+State 246
+
+   66 statement: ENQUEUE '(' var ',' . type pair_list ')' statement_list
+
+    IDENT  shift, and go to state 1
+
+    type   go to state 265
+    ident  go to state 18
+
+
+State 247
+
+   68 statement: COPY_HEAD '(' var ',' . var pair_list ')' SEMICOLON
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 266
+
+
+State 248
+
+   69 statement: CHECK_ALLOCATE '(' var ')' . SEMICOLON
+
+    SEMICOLON  shift, and go to state 267
+
+
+State 249
+
+   70 statement: CHECK_STOP_SLOTS '(' var ',' . STRING ',' STRING ')' SEMICOLON
+
+    STRING  shift, and go to state 268
+
+
+State 250
+
+   73 if_statement: IF '(' expr ')' . statement_list ELSE statement_list
+   74             | IF '(' expr ')' . statement_list
+   75             | IF '(' expr ')' . statement_list ELSE if_statement
+
+    '{'  shift, and go to state 91
+
+    statement_list  go to state 269
+
+
+State 251
+
+   86 expr: type DOUBLE_COLON ident '(' . expr_list ')'
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    $default  reduce using rule 63 (expr_list)
+
+    type         go to state 128
+    ident        go to state 129
+    expr_list    go to state 270
+    expr         go to state 216
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 252
+
+   79 expr: ident '(' expr_list ')' .
+
+    $default  reduce using rule 79 (expr)
+
+
+State 253
+
+   61 expr_list: expr ',' . expr_list
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    $default  reduce using rule 63 (expr_list)
+
+    type         go to state 128
+    ident        go to state 129
+    expr_list    go to state 271
+    expr         go to state 216
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 254
+
+   65 statement: expr ASSIGN expr SEMICOLON .
+
+    $default  reduce using rule 65 (statement)
+
+
+State 255
+
+   85 expr: expr DOT ident '(' . expr_list ')'
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    $default  reduce using rule 63 (expr_list)
+
+    type         go to state 128
+    ident        go to state 129
+    expr_list    go to state 272
+    expr         go to state 216
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 256
+
+   87 expr: expr '[' expr_list ']' .
+
+    $default  reduce using rule 87 (expr)
+
+
+State 257
+
+    9 decl: TRANSITION_DECL '(' ident_list ',' ident_list ',' ident pair_list ')' ident_list .
+
+    $default  reduce using rule 9 (decl)
+
+
+State 258
+
+   27 type_method: type_or_void ident '(' type_list . ')' pair_list SEMICOLON
+
+    ')'  shift, and go to state 273
+
+
+State 259
+
+   31 type_list: types .
+
+    $default  reduce using rule 31 (type_list)
+
+
+State 260
+
+   33 types: type . ',' types
+   34      | type .
+
+    ','  shift, and go to state 274
+
+    $default  reduce using rule 34 (types)
+
+
+State 261
+
+   24 type_member: type ident ASSIGN expr SEMICOLON .
+
+    $default  reduce using rule 24 (type_member)
+
+
+State 262
+
+   82 expr: CHIP '[' expr ']' DOT . var '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' DOT . var '[' expr ']' DOT var DOT field
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 275
+
+
+State 263
+
+   80 expr: THIS DOT var '[' expr . ']' DOT var DOT ident '(' expr_list ')'
+   81     | THIS DOT var '[' expr . ']' DOT var DOT field
+   84     | expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+    ']'         shift, and go to state 276
+
+
+State 264
+
+   67 statement: PEEK '(' var ',' type . ')' statement_list
+
+    ')'  shift, and go to state 277
+
+
+State 265
+
+   66 statement: ENQUEUE '(' var ',' type . pair_list ')' statement_list
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 278
+
+
+State 266
+
+   68 statement: COPY_HEAD '(' var ',' var . pair_list ')' SEMICOLON
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 279
+
+
+State 267
+
+   69 statement: CHECK_ALLOCATE '(' var ')' SEMICOLON .
+
+    $default  reduce using rule 69 (statement)
+
+
+State 268
+
+   70 statement: CHECK_STOP_SLOTS '(' var ',' STRING . ',' STRING ')' SEMICOLON
+
+    ','  shift, and go to state 280
+
+
+State 269
+
+   73 if_statement: IF '(' expr ')' statement_list . ELSE statement_list
+   74             | IF '(' expr ')' statement_list .
+   75             | IF '(' expr ')' statement_list . ELSE if_statement
+
+    ELSE  shift, and go to state 281
+
+    $default  reduce using rule 74 (if_statement)
+
+
+State 270
+
+   86 expr: type DOUBLE_COLON ident '(' expr_list . ')'
+
+    ')'  shift, and go to state 282
+
+
+State 271
+
+   61 expr_list: expr ',' expr_list .
+
+    $default  reduce using rule 61 (expr_list)
+
+
+State 272
+
+   85 expr: expr DOT ident '(' expr_list . ')'
+
+    ')'  shift, and go to state 283
+
+
+State 273
+
+   27 type_method: type_or_void ident '(' type_list ')' . pair_list SEMICOLON
+
+    ','  shift, and go to state 44
+
+    $default  reduce using rule 52 (pair_list)
+
+    pair_list  go to state 284
+
+
+State 274
+
+   33 types: type ',' . types
+
+    IDENT  shift, and go to state 1
+
+    types  go to state 285
+    type   go to state 260
+    ident  go to state 18
+
+
+State 275
+
+   82 expr: CHIP '[' expr ']' DOT var . '[' expr ']' DOT var DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' DOT var . '[' expr ']' DOT var DOT field
+
+    '['  shift, and go to state 286
+
+
+State 276
+
+   80 expr: THIS DOT var '[' expr ']' . DOT var DOT ident '(' expr_list ')'
+   81     | THIS DOT var '[' expr ']' . DOT var DOT field
+
+    DOT  shift, and go to state 287
+
+
+State 277
+
+   67 statement: PEEK '(' var ',' type ')' . statement_list
+
+    '{'  shift, and go to state 91
+
+    statement_list  go to state 288
+
+
+State 278
+
+   66 statement: ENQUEUE '(' var ',' type pair_list . ')' statement_list
+
+    ')'  shift, and go to state 289
+
+
+State 279
+
+   68 statement: COPY_HEAD '(' var ',' var pair_list . ')' SEMICOLON
+
+    ')'  shift, and go to state 290
+
+
+State 280
+
+   70 statement: CHECK_STOP_SLOTS '(' var ',' STRING ',' . STRING ')' SEMICOLON
+
+    STRING  shift, and go to state 291
+
+
+State 281
+
+   73 if_statement: IF '(' expr ')' statement_list ELSE . statement_list
+   75             | IF '(' expr ')' statement_list ELSE . if_statement
+
+    IF   shift, and go to state 125
+    '{'  shift, and go to state 91
+
+    statement_list  go to state 292
+    if_statement    go to state 293
+
+
+State 282
+
+   86 expr: type DOUBLE_COLON ident '(' expr_list ')' .
+
+    $default  reduce using rule 86 (expr)
+
+
+State 283
+
+   85 expr: expr DOT ident '(' expr_list ')' .
+
+    $default  reduce using rule 85 (expr)
+
+
+State 284
+
+   27 type_method: type_or_void ident '(' type_list ')' pair_list . SEMICOLON
+
+    SEMICOLON  shift, and go to state 294
+
+
+State 285
+
+   33 types: type ',' types .
+
+    $default  reduce using rule 33 (types)
+
+
+State 286
+
+   82 expr: CHIP '[' expr ']' DOT var '[' . expr ']' DOT var DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' DOT var '[' . expr ']' DOT var DOT field
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    type         go to state 128
+    ident        go to state 129
+    expr         go to state 295
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 287
+
+   80 expr: THIS DOT var '[' expr ']' DOT . var DOT ident '(' expr_list ')'
+   81     | THIS DOT var '[' expr ']' DOT . var DOT field
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 296
+
+
+State 288
+
+   67 statement: PEEK '(' var ',' type ')' statement_list .
+
+    $default  reduce using rule 67 (statement)
+
+
+State 289
+
+   66 statement: ENQUEUE '(' var ',' type pair_list ')' . statement_list
+
+    '{'  shift, and go to state 91
+
+    statement_list  go to state 297
+
+
+State 290
+
+   68 statement: COPY_HEAD '(' var ',' var pair_list ')' . SEMICOLON
+
+    SEMICOLON  shift, and go to state 298
+
+
+State 291
+
+   70 statement: CHECK_STOP_SLOTS '(' var ',' STRING ',' STRING . ')' SEMICOLON
+
+    ')'  shift, and go to state 299
+
+
+State 292
+
+   73 if_statement: IF '(' expr ')' statement_list ELSE statement_list .
+
+    $default  reduce using rule 73 (if_statement)
+
+
+State 293
+
+   75 if_statement: IF '(' expr ')' statement_list ELSE if_statement .
+
+    $default  reduce using rule 75 (if_statement)
+
+
+State 294
+
+   27 type_method: type_or_void ident '(' type_list ')' pair_list SEMICOLON .
+
+    $default  reduce using rule 27 (type_method)
+
+
+State 295
+
+   82 expr: CHIP '[' expr ']' DOT var '[' expr . ']' DOT var DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' DOT var '[' expr . ']' DOT var DOT field
+   84     | expr . DOT field
+   85     | expr . DOT ident '(' expr_list ')'
+   87     | expr . '[' expr_list ']'
+   88     | expr . STAR expr
+   89     | expr . SLASH expr
+   90     | expr . PLUS expr
+   91     | expr . DASH expr
+   92     | expr . '<' expr
+   93     | expr . '>' expr
+   94     | expr . LE expr
+   95     | expr . GE expr
+   96     | expr . EQ expr
+   97     | expr . NE expr
+   98     | expr . AND expr
+   99     | expr . OR expr
+  100     | expr . RIGHTSHIFT expr
+  101     | expr . LEFTSHIFT expr
+
+    DOT         shift, and go to state 174
+    EQ          shift, and go to state 176
+    NE          shift, and go to state 177
+    '<'         shift, and go to state 178
+    '>'         shift, and go to state 179
+    LE          shift, and go to state 180
+    GE          shift, and go to state 181
+    AND         shift, and go to state 182
+    OR          shift, and go to state 183
+    PLUS        shift, and go to state 184
+    DASH        shift, and go to state 185
+    STAR        shift, and go to state 186
+    SLASH       shift, and go to state 187
+    RIGHTSHIFT  shift, and go to state 188
+    LEFTSHIFT   shift, and go to state 189
+    '['         shift, and go to state 190
+    ']'         shift, and go to state 300
+
+
+State 296
+
+   80 expr: THIS DOT var '[' expr ']' DOT var . DOT ident '(' expr_list ')'
+   81     | THIS DOT var '[' expr ']' DOT var . DOT field
+
+    DOT  shift, and go to state 301
+
+
+State 297
+
+   66 statement: ENQUEUE '(' var ',' type pair_list ')' statement_list .
+
+    $default  reduce using rule 66 (statement)
+
+
+State 298
+
+   68 statement: COPY_HEAD '(' var ',' var pair_list ')' SEMICOLON .
+
+    $default  reduce using rule 68 (statement)
+
+
+State 299
+
+   70 statement: CHECK_STOP_SLOTS '(' var ',' STRING ',' STRING ')' . SEMICOLON
+
+    SEMICOLON  shift, and go to state 302
+
+
+State 300
+
+   82 expr: CHIP '[' expr ']' DOT var '[' expr ']' . DOT var DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' DOT var '[' expr ']' . DOT var DOT field
+
+    DOT  shift, and go to state 303
+
+
+State 301
+
+   80 expr: THIS DOT var '[' expr ']' DOT var DOT . ident '(' expr_list ')'
+   81     | THIS DOT var '[' expr ']' DOT var DOT . field
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 304
+    field  go to state 305
+
+
+State 302
+
+   70 statement: CHECK_STOP_SLOTS '(' var ',' STRING ',' STRING ')' SEMICOLON .
+
+    $default  reduce using rule 70 (statement)
+
+
+State 303
+
+   82 expr: CHIP '[' expr ']' DOT var '[' expr ']' DOT . var DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' DOT var '[' expr ']' DOT . var DOT field
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 111
+    var    go to state 306
+
+
+State 304
+
+   80 expr: THIS DOT var '[' expr ']' DOT var DOT ident . '(' expr_list ')'
+  109 field: ident .
+
+    '('  shift, and go to state 307
+
+    $default  reduce using rule 109 (field)
+
+
+State 305
+
+   81 expr: THIS DOT var '[' expr ']' DOT var DOT field .
+
+    $default  reduce using rule 81 (expr)
+
+
+State 306
+
+   82 expr: CHIP '[' expr ']' DOT var '[' expr ']' DOT var . DOT ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' DOT var '[' expr ']' DOT var . DOT field
+
+    DOT  shift, and go to state 308
+
+
+State 307
+
+   80 expr: THIS DOT var '[' expr ']' DOT var DOT ident '(' . expr_list ')'
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    $default  reduce using rule 63 (expr_list)
+
+    type         go to state 128
+    ident        go to state 129
+    expr_list    go to state 309
+    expr         go to state 216
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 308
+
+   82 expr: CHIP '[' expr ']' DOT var '[' expr ']' DOT var DOT . ident '(' expr_list ')'
+   83     | CHIP '[' expr ']' DOT var '[' expr ']' DOT var DOT . field
+
+    IDENT  shift, and go to state 1
+
+    ident  go to state 310
+    field  go to state 311
+
+
+State 309
+
+   80 expr: THIS DOT var '[' expr ']' DOT var DOT ident '(' expr_list . ')'
+
+    ')'  shift, and go to state 312
+
+
+State 310
+
+   82 expr: CHIP '[' expr ']' DOT var '[' expr ']' DOT var DOT ident . '(' expr_list ')'
+  109 field: ident .
+
+    '('  shift, and go to state 313
+
+    $default  reduce using rule 109 (field)
+
+
+State 311
+
+   83 expr: CHIP '[' expr ']' DOT var '[' expr ']' DOT var DOT field .
+
+    $default  reduce using rule 83 (expr)
+
+
+State 312
+
+   80 expr: THIS DOT var '[' expr ']' DOT var DOT ident '(' expr_list ')' .
+
+    $default  reduce using rule 80 (expr)
+
+
+State 313
+
+   82 expr: CHIP '[' expr ']' DOT var '[' expr ']' DOT var DOT ident '(' . expr_list ')'
+
+    IDENT        shift, and go to state 1
+    STRING       shift, and go to state 114
+    NUMBER       shift, and go to state 115
+    FLOATNUMBER  shift, and go to state 116
+    LIT_BOOL     shift, and go to state 117
+    CHIP         shift, and go to state 118
+    THIS         shift, and go to state 119
+    '('          shift, and go to state 127
+
+    $default  reduce using rule 63 (expr_list)
+
+    type         go to state 128
+    ident        go to state 129
+    expr_list    go to state 314
+    expr         go to state 216
+    literal      go to state 134
+    enumeration  go to state 135
+    var          go to state 136
+
+
+State 314
+
+   82 expr: CHIP '[' expr ']' DOT var '[' expr ']' DOT var DOT ident '(' expr_list . ')'
+
+    ')'  shift, and go to state 315
+
+
+State 315
+
+   82 expr: CHIP '[' expr ']' DOT var '[' expr ']' DOT var DOT ident '(' expr_list ')' .
+
+    $default  reduce using rule 82 (expr)

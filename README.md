@@ -75,9 +75,9 @@ cd $NACHOSROOT/build_repo/dafaxc/bin
 
 
 # Installing NEEDLE
- Please follow the readme file from here:
+ Please follow the readme file from here to build needle:
  https://github.com/sfu-arch/needle
- We are using an older version of needle which is not compatible with the one mentioned in the link
+ We are using an older version of needle and have added all our alias analysis mentioned in the paper
 
 
 
