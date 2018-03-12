@@ -29,7 +29,7 @@ sudo apt-get install perl
 
 
 # Directory Structure
-* \[mem-axc\](./mem-axc-64): simulator for dataflow architecture
+* mem-axc: simulator for dataflow architecture
      * bloom: bloom filter extracted from GEMS simulator
      * dafaxc: dataflow accelerator with ruby memory model from GEMS ( r) and bloom filter (b). It is a combined framework to model - load store queues, nachos-sw, and nachos
      * deprecated/macsim: macsim cpu simulator integrated with dataflow accelerator(d), ruby memory model(r) and bloom filter(b)
@@ -38,7 +38,7 @@ sudo apt-get install perl
        * c++/may-profile: runtime profiling of may alias pairs to know the ground truth
        * pin-tools: tools to calculate dynamic and static statistics for hotpaths
        * python: tools to calculate statistics such as fan-ins, and generate hotpaths for laod store queues, software approach, and nachos
-     * needle:  llvm compiler framework for extracting hotpaths
+* needle:  llvm compiler framework for extracting hotpaths
 
 
 
