@@ -52,53 +52,8 @@ Commented from pasha/tools/mwe/main.cpp
 * Building GEMS Ruby memory model.
 
 ```bash
-#Building GEMS memory model. Creates a library libroi.so
-cd mem-axc-64/apps/macsim.r.d.b.s/macsim-mem-axc-64
-make -C knobs/ 
-make -C gems-lib-ooo/ruby_clean PROTOCOL=MESI_CMP_directory_m  NOTESTER=1 DEBUG=1 -j 8
-
+./install.sh <path/to/boost/root>
 ```
-
-
-```
-
-### THIS README IS INCOMPLETE, FOLLOW THE README IN apps/dafaxc.r.b.s to build that
-### TO BUILD GEMS - FOLLOW THE README IN apps/macsim.r.d.b.s/macsim-mem-axc-64
-
-mkdir build_repo
-cd build_repo
-mkdir build-mem-axc-64
-cd build-mem-axc-64
-
-#### Build  bloom filter 
-mkdir bloom && cd bloom
-cmake <path/to/bloom.s>
-make -j 8
-cd ../
-#### build ruby memory model
-cd $(HOME)/mem-axc-64/apps/macsim.r.d.b.s/macsim-mem-axc-64
-TO BUILD & RUN 
-1. make -C knobs/   # creates files all_knobs.* and stats.* 
-2. make -C gems-lib-ooo/ruby_clean PROTOCOL=MESI_CMP_directory_m  NOTESTER=1 DEBUG=1 -j 8
-3. mkdir build 
-4\. cd build 
-5\. cmake -CMAKE\_BUILD\_TYPE=Debug ../
-6\. cd bin
-7\. cp params.in trace\_file\_list to bin directory from ../../cp\_to\_bin_files/
-8\. ./ooo-sim
-### creates a libruby.so
-
-
-#### building dataflow simulator 
-#### Dependencies
-#### libbloom.so: from bloom filter
-#### libruby.so: from ruby memory model
-mkdir dafaxc
-
-### in the cmake file of dafaxc set the path to the generated libbloom.a in the previous folder
-cmake -DBOOST_ROOT= <path/to/boost>  <path/to/dafaxc>
-make -j 8
-```bash
 
 
 

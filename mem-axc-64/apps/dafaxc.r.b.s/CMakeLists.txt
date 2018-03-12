@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(dafaxc)
 
-set(BLOOM_PATH /home/nvedula/summer2016/mem-axc-64-build/bloom.s-build) 
+# set(BLOOM_PATH /home/nvedula/summer2016/mem-axc-64-build/bloom.s-build) 
+set(BLOOM_PATH $NACHOSROOT/build_repo/build-mem-axc-64/bloom) 
 set(PACKAGE_NAME dafaxc)
 set(PACKAGE_VERSION 0.1)
 set(PACKAGE_STRING "${PACKAGE_NAME} ${PACKAGE_VERSION}")
