@@ -4,7 +4,7 @@
 # # Dependencies
 # gcc 4.8+ 
 # cmake minimum VERSION 2.8+
-# boost library - 1.61 and above
+# boost library - tested with 1.66
 # pin3.0 
 #
 # Macsim - uses 64 bit shared library generated from pin and needs zlib
@@ -62,6 +62,10 @@ echo "boost location is:  $BOOST"
 cmake -DBOOST_ROOT=$BOOST -DBLOOM_PATH=$NACHOSROOT/build_repo/bloom  $NACHOSROOT/mem-axc-64/apps/dafaxc.r.b.s 
 # cmake -DBOOST_ROOT=$1 -DBLOOM_PATH=$NACHOSROOT/build_repo/bloom  $NACHOSROOT/mem-axc-64/apps/dafaxc.r.b.s 
 make -j 8
+pushd bin
+cp $NACHOSROOT/mem-axc-64/apps/dafaxc.r.b.s/run-dafaxc.sh .
+./run-dafaxc.sh
+popd
 popd
 
 # # Building Macsim which executes CPU code.
