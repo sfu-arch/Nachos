@@ -21,26 +21,25 @@ NACHOSROOT=$PWD
 export NACHOSROOT=$NACHOSROOT
 echo "NACHOSROOT = $NACHOSROOT"
 
-# echo "Building GEMS memory model. Creates a library libroi.so"
-# make -C mem-axc/gems-lib-ooo/ruby_clean  PROTOCOL=MESI_CMP_directory_m  NOTESTER=1 DEBUG=1 -j 8
+echo "Building GEMS memory model. Creates a library libroi.so"
+make -C mem-axc/gems-lib-ooo/ruby_clean  PROTOCOL=MESI_CMP_directory_m  NOTESTER=1 DEBUG=1 -j 8
 
 
 echo "creating build_dir"
 mkdir -p build_repo
 pushd build_repo >/dev/null
 
-# echo "Building  bloom filter creates a static library libbloom.a"
-# mkdir bloom
-# pushd bloom>/dev/null
-# cmake $NACHOSROOT/mem-axc/bloom
-# make -j 8
-# popd 
+echo "Building  bloom filter creates a static library libbloom.a"
+mkdir bloom
+pushd bloom>/dev/null
+cmake $NACHOSROOT/mem-axc/bloom
+make -j 8
+popd 
 
 
 BOOST=
 if [ -z "$1" ]
 then
-	# BOOST=/media/vnaveen0/shared/vm-shared/softwares/boost/boost_1_61_0/boost_1_61_0/build
   BOOST=/home/vnaveen0/shared/vm-shared/softwares/boost/boost_1_66_0
 else
 	BOOST=$1
@@ -49,57 +48,41 @@ fi
 echo "boost location is:  $BOOST"
 
 
-# echo " building dataflow simulator" 
-# echo " Dependencies: libbloom.so: from bloom filter and libruby.so: from ruby memory model"
-# mkdir -p dafaxc
-# pushd dafaxc>/dev/null
-# ## in the cmake file of dafaxc set the path to the generated libbloom.a in the previous folder
-# cmake -DBOOST_ROOT=$BOOST -DBLOOM_PATH=$NACHOSROOT/build_repo/bloom  $NACHOSROOT/mem-axc/dafaxc 
-# # cmake -DBOOST_ROOT=$1 -DBLOOM_PATH=$NACHOSROOT/build_repo/bloom  $NACHOSROOT/mem-axc/dafaxc 
-# make -j 8
-# pushd bin
-# cp $NACHOSROOT/mem-axc/dafaxc/run-dafaxc.sh .
-# # ./run-dafaxc.sh
-# popd
-# popd
-
-
-
-
-# Building Macsim which executes CPU code.
-MACSIMSRC=$NACHOSROOT/mem-axc/macsim
-echo "macsim src loc: $MACSIMSRC"
-pushd $MACSIMSRC >/dev/null
-make -C knobs/
-popd 
-
-mkdir -p macsim-mem-axc
-pushd macsim-mem-axc>/dev/null
-cmake -DBOOST_ROOT=$BOOST -DBLOOM_PATH=$NACHOSROOT/build_repo/bloom  $MACSIMSRC 
+echo " building dataflow simulator" 
+echo " Dependencies: libbloom.so: from bloom filter and libruby.so: from ruby memory model"
+mkdir -p dafaxc
+pushd dafaxc>/dev/null
+## in the cmake file of dafaxc set the path to the generated libbloom.a in the previous folder
+cmake -DBOOST_ROOT=$BOOST -DBLOOM_PATH=$NACHOSROOT/build_repo/bloom  $NACHOSROOT/mem-axc/dafaxc 
+# cmake -DBOOST_ROOT=$1 -DBLOOM_PATH=$NACHOSROOT/build_repo/bloom  $NACHOSROOT/mem-axc/dafaxc 
 make -j 8
-cd bin
-cp $MACSIMSRC/cp_to_bin_files/* .
-# Need to set trace_file_list path where the input trace files are located 
-RUBY=$MACSIMSRC/gems-lib-ooo/ruby_clean
-ln -s ${RUBY}/DRAM
-ln -s ${RUBY}/network
-./ooo-sim
+pushd bin
+cp $NACHOSROOT/mem-axc/dafaxc/run-dafaxc.sh .
+# ./run-dafaxc.sh
+popd
+popd
 
 
 
-# #### build ruby memory model
-# cd $(HOME)/mem-axc-64/apps/macsim.r.d.b.s/macsim-mem-axc-64
-# TO BUILD & RUN 
-# 1. make -C knobs/   # creates files all_knobs.* and stats.* 
-# 2. make -C gems-lib-ooo/ruby_clean PROTOCOL=MESI_CMP_directory_m  NOTESTER=1 DEBUG=1 -j 8
-# 3. mkdir build 
-# 4\. cd build 
-# 5\. cmake -CMAKE\_BUILD\_TYPE=Debug ../
-# 6\. cd bin
-# 7\. cp params.in trace\_file\_list to bin directory from ../../cp\_to\_bin_files/
-# 8\. ./ooo-sim
-# ### creates a libruby.so
-
+# ## Deprecated: to run mv macsim folder from deprecated to NACHOS ROOT
+# # Building Macsim which executes CPU code.
+# MACSIMSRC=$NACHOSROOT/mem-axc/macsim
+# echo "macsim src loc: $MACSIMSRC"
+# pushd $MACSIMSRC >/dev/null
+# make -C knobs/
+# popd 
+#
+# mkdir -p macsim-mem-axc
+# pushd macsim-mem-axc>/dev/null
+# cmake -DBOOST_ROOT=$BOOST -DBLOOM_PATH=$NACHOSROOT/build_repo/bloom  $MACSIMSRC 
+# make -j 8
+# cd bin
+# cp $MACSIMSRC/cp_to_bin_files/* .
+# # Need to set trace_file_list path where the input trace files are located 
+# RUBY=$MACSIMSRC/gems-lib-ooo/ruby_clean
+# ln -s ${RUBY}/DRAM
+# ln -s ${RUBY}/network
+# ./ooo-sim
 
 
 #* Installing NEEDLE

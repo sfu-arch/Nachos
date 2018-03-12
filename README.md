@@ -29,18 +29,16 @@ sudo apt-get install perl
 
 
 # Directory Structure
-* \[mem-axc-64\](./mem-axc-64): simulator for dataflow architecture
-	* apps:
-		* bloom.s: bloom filter extracted from GEMS simulator
-	    * dafaxc.r.b.s: dataflow accelerator with ruby memory model from GEMS ( r) and bloom filter (b). It is a combined framework to model - load store queues, nachos-sw, and nachos
-	    * macsim.r.d.b.s: macsim cpu simulator integrated with dataflow accelerator(d), ruby memory model(r) and bloom filter(b)
-	   * test: small examples for testing each framework
-   * tools: tools to calculate statistics
-	   * c++/may-profile: runtime profiling of may alias pairs to know the ground truth
-	   * pin-tools: tools to calculate dynamic and static statistics for hotpaths
-	   * python: tools to calculate statistics such as fan-ins, and generate hotpaths for laod store queues, software approach, and nachos
-	   
-* needle:  llvm compiler framework for extracting hotpaths
+* \[mem-axc\](./mem-axc-64): simulator for dataflow architecture
+     * bloom: bloom filter extracted from GEMS simulator
+     * dafaxc: dataflow accelerator with ruby memory model from GEMS ( r) and bloom filter (b). It is a combined framework to model - load store queues, nachos-sw, and nachos
+     * deprecated/macsim: macsim cpu simulator integrated with dataflow accelerator(d), ruby memory model(r) and bloom filter(b)
+     * test: small examples for testing each framework
+     * tools: tools to calculate statistics
+       * c++/may-profile: runtime profiling of may alias pairs to know the ground truth
+       * pin-tools: tools to calculate dynamic and static statistics for hotpaths
+       * python: tools to calculate statistics such as fan-ins, and generate hotpaths for laod store queues, software approach, and nachos
+     * needle:  llvm compiler framework for extracting hotpaths
 
 
 
