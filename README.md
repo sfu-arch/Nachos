@@ -13,6 +13,13 @@ sudo apt-get update
 sudo apt-get upgrade 
 sudo apt-get install flex bison
 sudo apt-get install zlib1g-dev
+sudo apt-get install cmake
+# boost needs to be installed from source: 
+# http://www.boost.org/doc/libs/1_65_0/more/getting_started/unix-variants.html
+
+# To install Pin
+# https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads
+
 ```
 
 
