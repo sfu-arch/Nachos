@@ -1,10 +1,22 @@
 # Dependencies
 gcc 4.8+ 
-cmake minimum VERSION 2.8
+cmake minimum VERSION 2.8+
 boost library - 1.61 and above
 pin3.0 
-Macsim - uses 64 bit shared library generated from pin
-gems ruby memory model
+
+Macsim - uses 64 bit shared library generated from pin and needs zlib
+gems ruby memory model needs flex and bison and zlib
+
+``` bash
+#If makefile breaks:
+sudo apt-get update 
+sudo apt-get upgrade 
+sudo apt-get install flex bison
+sudo apt-get install zlib1g-dev
+```
+
+
+
 
 # Directory Structure
 * \[mem-axc-64\](./mem-axc-64): simulator for dataflow architecture
@@ -21,18 +33,12 @@ gems ruby memory model
 * needle:  llvm compiler framework for extracting hotpaths
 
 
-l
 
 
 
 
 
 # PITFALLS
-
-RUBY : hardcoded CC= g++ ; need to manually change 
-at $HOME/apps/macsim.r.d.b.s/macsim-mem-axc-64/gems-lib-ooo/common/Makefile.common
-
-
 
 To get the stack addreses for pin tool
 Commented from pasha/tools/mwe/main.cpp
@@ -43,7 +49,19 @@ Commented from pasha/tools/mwe/main.cpp
 
 # Installation
 
+* Building GEMS Ruby memory model.
+
 ```bash
+#Building GEMS memory model. Creates a library libroi.so
+cd mem-axc-64/apps/macsim.r.d.b.s/macsim-mem-axc-64
+make -C knobs/ 
+make -C gems-lib-ooo/ruby_clean PROTOCOL=MESI_CMP_directory_m  NOTESTER=1 DEBUG=1 -j 8
+
+```
+
+
+```
+
 ### THIS README IS INCOMPLETE, FOLLOW THE README IN apps/dafaxc.r.b.s to build that
 ### TO BUILD GEMS - FOLLOW THE README IN apps/macsim.r.d.b.s/macsim-mem-axc-64
 

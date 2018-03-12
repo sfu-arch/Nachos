@@ -59,15 +59,11 @@ O3sim_ruby::O3sim_ruby( unsigned num_processors,
    m_CMP = CMP;
    m_garnet = garnet;
 
-   // m_debug_start_time = debug_start_time;
-   // m_debug_filter_string = debug_filter_string;
-   // m_debug_verbosity_string = debug_verbosity_string;
-   // m_debug_output_filename = debug_output_filename;
-   m_debug_start_time = 1;
-   m_debug_filter_string = "all";
-   m_debug_verbosity_string = "high";
-   
-   m_debug_output_filename = "debugname";
+   m_debug_start_time = debug_start_time;
+   m_debug_filter_string = debug_filter_string;
+   m_debug_verbosity_string = debug_verbosity_string;
+   m_debug_output_filename = debug_output_filename;
+
 }
 
 O3sim_ruby::~O3sim_ruby() {

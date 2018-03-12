@@ -76,8 +76,7 @@ g_NUM_SMT_THREADS: 1
 // Maximum number of requests (including SW prefetches) outstanding from
 // the sequencer (Note: this also include items buffered in the store
 // buffer)
-//g_SEQUENCER_OUTSTANDING_REQUESTS: 16
-g_SEQUENCER_OUTSTANDING_REQUESTS: 256
+g_SEQUENCER_OUTSTANDING_REQUESTS: 16
 
 
 PROTOCOL_DEBUG_TRACE: true
