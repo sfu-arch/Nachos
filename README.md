@@ -65,5 +65,11 @@ Commented from pasha/tools/mwe/main.cpp
 ./install.sh <path/to/boost/root>
 ```
 
+# Installing NEEDLE
+ Please follow the readme file from here:
+ https://github.com/sfu-arch/needle
+ We are using an older version of needle which is not compatible with the one mentioned in the link
+
+
 
 
