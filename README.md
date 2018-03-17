@@ -4,6 +4,20 @@ cmake minimum VERSION 2.8+
 boost library - 1.61 and above
 pin3.0 
 
+### Citation
+
+```
+@inproceedings { vedula-hpca-2018,
+    author =  {Naveen Vedula and Arrvindh Shriraman and Snehasish Kumar and Nick Sumner and Steven Magrem and Viji Srinivasam and and Arrvindh Shriraman} ,
+     title =  {NACHOS: Software-Driven Hardware-Assisted Memory Disambiguation for Accelerators} ,
+     booktitle =  { Proc. of the 19th Intl. Symp. on High Performance Computer Architecture } ,
+     series =  { HPCA } ,
+     type   =  { Accelerators } ,
+     year =  { 2018 }
+    } 
+```
+
+
 Macsim - uses 64 bit shared library generated from pin and needs zlib,perl
 gems ruby memory model needs flex and bison and zlib
 
