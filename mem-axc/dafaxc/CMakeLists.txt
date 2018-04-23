@@ -71,13 +71,13 @@ file(GLOB SOURCES "src/*.cpp")
 
 
 # FOR DAFAXC BINARY
-# add_executable(dafaxc ${SOURCES})
-# target_link_libraries(dafaxc ${Boost_LIBRARIES}  ${PROJECT_LINK_LIBS} )
+add_executable(dafaxc ${SOURCES})
+target_link_libraries(dafaxc ${Boost_LIBRARIES}  ${PROJECT_LINK_LIBS} )
 
-# FOR BUILDING  A SHARED LIBRARY
-add_library(dafaxc SHARED ${SOURCES})
-install(TARGETS dafaxc DESTINATION "/home/vnaveen0/wind_drive/sfu/nachos/Nachos/build_repo/dafaxc/bin/")
-target_link_libraries(dafaxc ${Boost_LIBRARIES}  ${PROJECT_LINK_LIBS} -lz )
+# # FOR BUILDING  A SHARED LIBRARY
+# add_library(dafaxc SHARED ${SOURCES})
+# install(TARGETS dafaxc DESTINATION "/home/vnaveen0/wind_drive/sfu/nachos/Nachos/build_repo/dafaxc/bin/")
+# target_link_libraries(dafaxc ${Boost_LIBRARIES}  ${PROJECT_LINK_LIBS} -lz )
 
 
 
