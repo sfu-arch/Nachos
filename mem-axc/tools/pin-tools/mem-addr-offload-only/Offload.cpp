@@ -81,11 +81,13 @@ bool g_enable_offload = false;
 
 UINT64 iteration_no=0;
 UINT64 iteration_success=0;
+UINT64 iteration_failure=0;
 UINT64 g_inst_count =0;
 UINT64 g_inst_offload_count =0;
 
 vector<MemInfo> g_mem_set_offload;
 std::ofstream AxcMEMFile;
+std::ofstream PINOUTFile;
 UINT64 ofload_mem = 0;
 
 
@@ -143,12 +145,14 @@ void flush_axc_memset_to_file()
 VOID Fini(INT32 code, VOID *v)
 {
 
-  cout<<"Total Iterations:"<<iteration_no<<"\n";
-  cout<<"Total Iterations: SUCCESS "<<iteration_success<<"\n";
-  cout<<"Total Instructions in Parent Function:"<<g_inst_count<<"\n";
-  cout<<"Total Instructions in Offload Function:"<<g_inst_offload_count<<"\n";
-  cout<<"Total Mem Ofload: " << ofload_mem << endl;
-  cout<<"Exiting ...\n";
+  PINOUTFile <<"Total Iterations "<<iteration_no<<"\n";
+  PINOUTFile <<"Total SUCCESS "<<iteration_success<<"\n";
+  PINOUTFile <<"Total FAILURE "<<iteration_failure<<"\n";
+  PINOUTFile <<"Total Instructions in Parent Function "<<g_inst_count<<"\n";
+  PINOUTFile <<"Total Instructions in Offload Function "<<g_inst_offload_count<<"\n";
+  PINOUTFile <<"Total Mem Ofload " << ofload_mem << "\n";
+  PINOUTFile <<"Exiting ...\n";
+  PINOUTFile.close();
   AxcMEMFile.close();
 
 }
@@ -176,7 +180,12 @@ VOID offload_funcAfter(ADDRINT ret)
           PIN_ExitProcess(0);
       }
     }
-      g_mem_set_offload.clear();
+    else
+    {
+        ++iteration_failure;
+    }
+
+    g_mem_set_offload.clear();
     //else --if offload func fails -- dump all ld st to OOO
 
     //  AxcMEMFile<<"return value is: "<<ret<<endl;
@@ -428,7 +437,7 @@ int main(int argc, char *argv[])
     else if (i == 1)
       line.copy(OFFLOAD_FUNC, line.size(), 0);
     else
-      return 1;
+      assert(false && "function.txt contains more than 2 lines \n");
     i++;
   }
 
@@ -438,6 +447,7 @@ int main(int argc, char *argv[])
 
   // Write to a file since cout and cerr maybe closed by the application
   AxcMEMFile.open("axc-dump.out");
+  PINOUTFile.open("pin-dump.out");
   //AxcMEMFile << hex;
   AxcMEMFile.setf(ios::showbase);
 
