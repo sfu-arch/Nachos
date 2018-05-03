@@ -70,7 +70,11 @@ Commented from pasha/tools/mwe/main.cpp
 
 
 # Installation
-
+First of all give execute permissions to following scripts:
+```
+  # chmod +x ./mem-axc/gems-lib-ooo/scripts/calc_host.sh
+  # chmod +x ./install.sh
+```
 * Building GEMS, DAFXC, BLOOM, and MACSIM 
 
 ```bash
