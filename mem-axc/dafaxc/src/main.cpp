@@ -252,11 +252,11 @@ main(int argc, char* argv[])
 
   cout<< "m_iter_vec : size: "<<m_iter_vec.size() <<endl;
 
-  // if(m_iter_vec.size() == 0)
-  // {
-  //   cerr<<"Error: m_iter_vec : size = 0"<<endl;
-  //   exit(0);
-  // }
+  if(m_iter_vec.size() == 0)
+  {
+    cerr<<"Error: m_iter_vec : size = 0"<<endl;
+    exit(0);
+  }
 
 
   cout<<"Main: Loaded Iteration nos. \n";
